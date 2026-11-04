@@ -604,3 +604,7 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .kq-lead { grid-column: 1 / -1; border-top: 0; padding-top: 0; }
 .kq-lead p { font-size: clamp(1.7rem, 2.8vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; }
 @media (max-width: 800px) { .kind-grid, .kind-quotes { grid-template-columns: minmax(0, 1fr); } .kind-photo { max-width: 26rem; } }
+/* v121 a quote lives inside the box it vouches for */
+.t-quote { margin: 0.3rem 0 0; padding-left: 0.9rem; border-left: 2px solid hsl(var(--accent) / 0.5); }
+.t-quote p { margin: 0 0 0.3rem; font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 350; font-size: 1.02rem; line-height: 1.35; color: var(--cream); }
+.t-quote cite { font-style: normal; font-size: 0.76rem; color: var(--cream-2); }
