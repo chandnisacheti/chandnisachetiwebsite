@@ -71,3 +71,64 @@
     });
   });
 })();
+
+// ---- Phone menu, swipe dots, scroll reveal, touch glow ----
+(function () {
+  'use strict';
+  var body = document.body;
+  var btn = document.querySelector('[data-menu]');
+  if (btn) {
+    var setOpen = function (open) {
+      body.classList.toggle('menu-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.querySelector('.menu-label').textContent = open ? 'Close' : 'Menu';
+    };
+    btn.addEventListener('click', function () { setOpen(!body.classList.contains('menu-open')); });
+    Array.prototype.forEach.call(document.querySelectorAll('#site-nav a'), function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+    window.matchMedia('(min-width: 701px)').addEventListener('change', function (m) { if (m.matches) setOpen(false); });
+  }
+
+  // Dots under each swipeable row
+  Array.prototype.forEach.call(document.querySelectorAll('.board'), function (board) {
+    var tiles = board.querySelectorAll(':scope > .tile');
+    if (tiles.length < 2) return;
+    var hint = document.createElement('div');
+    hint.className = 'swipe-hint'; hint.setAttribute('aria-hidden', 'true');
+    for (var i = 0; i < tiles.length; i++) hint.appendChild(document.createElement('span'));
+    board.parentNode.insertBefore(hint, board.nextSibling);
+    var dots = hint.children;
+    function update() {
+      var w = tiles[0].getBoundingClientRect().width + 12;
+      var idx = Math.round(board.scrollLeft / w);
+      if (board.scrollLeft + board.clientWidth >= board.scrollWidth - 4) idx = tiles.length - 1;
+      for (var j = 0; j < dots.length; j++) dots[j].classList.toggle('on', j === idx);
+    }
+    board.addEventListener('scroll', update, { passive: true });
+    update();
+  });
+
+  // Reveal on scroll
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    var els = document.querySelectorAll('.tile, .circle, .pillar-head, .work-intro, .block, .portrait');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    Array.prototype.forEach.call(els, function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top > window.innerHeight) { el.classList.add('reveal'); io.observe(el); }
+    });
+  }
+
+  // On touch screens there is no cursor: let the glow drift with scrolling
+  if (window.matchMedia('(hover: none)').matches) {
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY, W = window.innerWidth, H = window.innerHeight;
+      var ev = new PointerEvent('pointermove', { clientX: W * (0.5 + 0.35 * Math.sin(y / 700)), clientY: H * (0.35 + 0.2 * Math.cos(y / 900)) });
+      window.dispatchEvent(ev);
+    }, { passive: true });
+  }
+})();
