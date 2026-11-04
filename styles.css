@@ -350,3 +350,17 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
   .hero-h .r2 { padding-left: 9%; }
   .hero-h .r3 { padding-left: 20%; }
 }
+
+/* v84: centered mission, tighter Work→Speaking gap, media arrows */
+.work-head .work-intro { text-align: center; font-size: clamp(2.3rem, 4.8vw, 4rem); line-height: 1.08; max-width: 22ch; margin: 0.4rem auto 0.6rem; }
+.work-head .jump { justify-content: center; }
+.work { padding-bottom: 0; }
+.work .pillar:last-child { padding-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+
+.media { position: relative; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; }
+.media::-webkit-scrollbar { display: none; }
+.media .strip { animation: none; }
+.media-wrap { position: relative; }
+.media-btn { position: absolute; top: calc(50% - 0.9rem); transform: translateY(-50%); z-index: 2; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: rgba(56, 62, 36, 0.72); color: var(--cream); font: inherit; font-size: 1.2rem; line-height: 1; display: grid; place-items: center; cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background-color 0.2s, border-color 0.2s; }
+.media-btn:hover { border-color: var(--cream); background: rgba(56, 62, 36, 0.92); }
+.media-btn.prev { left: 6px; } .media-btn.next { right: 6px; }

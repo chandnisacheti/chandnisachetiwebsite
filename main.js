@@ -132,3 +132,54 @@
     }, { passive: true });
   }
 })();
+
+/* Media strip: keeps drifting on its own; arrows (and swipe/drag) jump back and forth */
+(function () {
+  var media = document.querySelector('.media');
+  var strip = media && media.querySelector('.strip');
+  if (!strip) return;
+  var wrap = document.createElement('div');
+  wrap.className = 'media-wrap';
+  media.parentNode.insertBefore(wrap, media);
+  wrap.appendChild(media);
+  function btn(cls, label, ch) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'media-btn ' + cls; b.setAttribute('aria-label', label); b.textContent = ch;
+    wrap.appendChild(b); return b;
+  }
+  var prev = btn('prev', 'Previous photos', '←');
+  var next = btn('next', 'Next photos', '→');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var paused = false, holdUntil = 0, pos = 0, last = 0;
+  function half() { var gap = parseFloat(getComputedStyle(strip).columnGap) || 0; return strip.scrollWidth / 2 + gap / 2; }
+  function wrapPos() { var h = half(); if (media.scrollLeft >= h) media.scrollLeft -= h; else if (media.scrollLeft <= 0) media.scrollLeft += h; }
+  function step() {
+    var item = strip.querySelector('li');
+    return item ? item.getBoundingClientRect().width + 14 : 300;
+  }
+  function jump(dir) {
+    holdUntil = performance.now() + 2500;
+    if (dir < 0 && media.scrollLeft < step()) media.scrollLeft += half();
+    media.scrollBy({ left: dir * step(), behavior: reduce ? 'auto' : 'smooth' });
+  }
+  prev.addEventListener('click', function () { jump(-1); });
+  next.addEventListener('click', function () { jump(1); });
+  media.addEventListener('mouseenter', function () { paused = true; });
+  media.addEventListener('mouseleave', function () { paused = false; });
+  ['touchstart', 'wheel', 'pointerdown'].forEach(function (ev) {
+    media.addEventListener(ev, function () { holdUntil = performance.now() + 2500; }, { passive: true });
+  });
+  media.addEventListener('scroll', function () { if (performance.now() < holdUntil || paused) { wrapPos(); pos = media.scrollLeft; } }, { passive: true });
+  if (reduce) return;
+  function tick(t) {
+    var dt = last ? Math.min(t - last, 50) : 0; last = t;
+    if (!paused && t > holdUntil && !document.hidden) {
+      pos += dt * 0.03;              /* ~30px per second */
+      media.scrollLeft = pos;
+      if (media.scrollLeft >= half()) { pos -= half(); media.scrollLeft = pos; }
+    } else { pos = media.scrollLeft; }
+    requestAnimationFrame(tick);
+  }
+  media.scrollLeft = 1; pos = 1;
+  requestAnimationFrame(tick);
+})();
