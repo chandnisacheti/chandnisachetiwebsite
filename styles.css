@@ -630,3 +630,4 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
   .board > .b-logo.b-side > .t-photo:not(.t-diagram) { flex-basis: 40%; min-height: 0; }
 }
 @media (min-width: 701px) { .board > .b-refuel.b-side > .t-photo:not(.t-diagram) { flex-basis: 50%; } .b-refuel > .t-photo img { object-position: 28% 45% !important; } }
+@media (min-width: 701px) { #beyond .board > .s6.b-side > .t-photo:not(.t-diagram) { min-height: 15rem; } #beyond .board > .s4:not(.b-fig) > .t-photo:not(.t-diagram) { max-height: 14rem; min-height: 14rem; } }
