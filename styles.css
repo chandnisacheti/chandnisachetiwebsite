@@ -402,25 +402,95 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .t-org > a.t-link { width: 100%; justify-content: space-between; }
 .t-org span { text-align: right; }
 
-/* hierarchy: pairs sit 7/5 so the boxes are not identical halves */
-@media (min-width: 701px) {
-  .board { grid-template-columns: repeat(12, minmax(0, 1fr)); }
-  .board > .tile { grid-column: span 6; }
-  .board > .tile-wide:first-child:nth-last-child(2) { grid-column: span 7; }
-  .board > .tile-wide:nth-child(2):last-child { grid-column: span 5; padding-left: 1.4rem; }
-  .board > .tile-wide:nth-child(2):last-child > .t-photo { position: relative; inset: auto; width: auto; margin: -1.4rem -1.4rem 0.5rem; aspect-ratio: 16 / 10; border-right: 0; border-bottom: 1px solid hsl(var(--accent) / 0.2); }
-  .board > .tile-wide:nth-child(2):last-child > .t-photo:has(img[src*="refuel-logo"]) { position: relative; }
-  .group:nth-of-type(even) > .board > .tile-wide:first-child:nth-last-child(2) { grid-column: span 5; padding-left: 1.4rem; }
-  .group:nth-of-type(even) > .board > .tile-wide:first-child:nth-last-child(2) > .t-photo { position: relative; inset: auto; width: auto; margin: -1.4rem -1.4rem 0.5rem; aspect-ratio: 16 / 10; border-right: 0; border-bottom: 1px solid hsl(var(--accent) / 0.2); }
-  .group:nth-of-type(even) > .board > .tile-wide:nth-child(2):last-child { grid-column: span 7; padding-left: calc(50% + 1.4rem); }
-  .group:nth-of-type(even) > .board > .tile-wide:nth-child(2):last-child > .t-photo { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; margin: 0; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid hsl(var(--accent) / 0.2); }
-  .board-3 > .tile { grid-column: span 4; }
-  .board:has(img[src*="lwk"]) > .tile:nth-child(1) { grid-column: span 7; }
-  .board:has(img[src*="lwk"]) > .tile:nth-child(2) { grid-column: span 5; }
-  .board:has(img[src*="lwk"]) > .tile:nth-child(3) { grid-column: span 4; }
-  .board:has(img[src*="lwk"]) > .tile:nth-child(4), .board:has(img[src*="lwk"]) > .tile:nth-child(5) { grid-column: span 4; }
-}
-
 /* less crushed display tracking; plain jump links */
 .hero-h { letter-spacing: -0.025em; }
 .jump a { border-radius: 4px; }
+
+/* ==========================================================
+   v110 Boxes shaped by their photos.
+   Photos keep their own proportions (no forced crop); box widths
+   follow the photo (tall photo = narrow box, wide photo = wide box).
+   Inside: title and year on one line, one sentence, a quiet credit
+   line under the pillar's signal trace. No category label.
+   ========================================================== */
+.tile { display: flex; flex-direction: column; gap: 0; padding: 0; min-height: 0; overflow: hidden; }
+.tile > .t-photo { position: relative; inset: auto; width: auto; margin: 0; padding: 0; aspect-ratio: auto; border: 0; border-bottom: 1px solid hsl(var(--accent) / 0.2); background: hsl(var(--accent) / 0.05); }
+.tile > .t-photo img { position: static; width: 100%; height: auto; object-fit: initial; display: block; }
+.tile > .t-photo.t-diagram { aspect-ratio: 21 / 20; display: grid; place-items: center; }
+.tile > .t-photo.t-diagram svg { width: 100%; height: 100%; }
+.t-body { display: flex; flex-direction: column; gap: 0.75rem; padding: 1.3rem 1.4rem 1.25rem; flex: 1; }
+.t-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.tile .t-head .t-hook { margin: 0; font-size: clamp(1.9rem, 2.6vw, 2.5rem); line-height: 1; letter-spacing: -0.012em; font-weight: 400; overflow-wrap: normal; }
+.t-when { flex: none; font-size: 0.82rem; color: hsl(var(--accent)); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.t-cap { margin: 0; color: var(--cream); opacity: 0.86; max-width: 46ch; }
+.t-metric { margin: 0; font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-size: 1.35rem; line-height: 1.15; color: hsl(var(--accent)); }
+.t-credit { position: relative; margin: auto 0 0; padding-top: 1.3rem; font-size: 0.84rem; color: var(--cream-2); }
+.t-credit a { color: var(--cream); text-decoration: none; }
+.t-credit a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.t-credit::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 16px; background: hsl(var(--accent) / 0.5);
+  -webkit-mask: var(--trace) 0 0 / 160px 16px repeat-x; mask: var(--trace) 0 0 / 160px 16px repeat-x; }
+.tile:hover .t-credit::before { background: hsl(var(--accent)); animation: trace-run 2.4s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .tile:hover .t-credit::before { animation: none; } }
+.b-fig .t-metric { margin-top: auto; }
+
+/* the Reflex logo sits on a soft panel at its own proportions */
+.b-logo > .t-photo { padding: 2.2rem 3rem; }
+.b-logo > .t-photo img { opacity: 0.7; }
+
+/* text-only boxes: a bigger title, no photo */
+.b-text .t-body { padding-top: 1.6rem; }
+.b-text .t-head .t-hook { font-size: clamp(2.2rem, 3.2vw, 3rem); }
+
+/* feature boxes: the one big moment in each section */
+.b-feature .t-head .t-hook { font-size: clamp(2.6rem, 4vw, 3.8rem); }
+
+@media (min-width: 701px) {
+  .board, .board-3, .board-projects { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; align-items: start; }
+  .board > .tile { grid-column: span 6; }
+  .board > .s4 { grid-column: span 4; } .board > .s5 { grid-column: span 5; } .board > .s6 { grid-column: span 6; }
+  .board > .s7 { grid-column: span 7; } .board > .s12 { grid-column: 1 / -1; }
+  /* side-by-side: picture left, words right */
+  .board > .b-side { flex-direction: row; align-items: stretch; }
+  .board > .b-side > .t-photo { flex: 0 0 46%; border-bottom: 0; border-right: 1px solid hsl(var(--accent) / 0.2); }
+  .board > .s12.b-side > .t-photo { flex-basis: 58%; }
+  .board > .b-side > .t-photo img { height: 100%; object-fit: cover; }
+  .board > .b-side > .t-photo.t-diagram { aspect-ratio: auto; min-height: 20rem; }
+  /* rows whose boxes end at different heights keep a straight bottom edge inside the group */
+  .board > .tile { align-self: stretch; }
+  .board > .tile > .t-photo:not(.t-diagram) { flex: none; }
+}
+@media (max-width: 700px) {
+  .tile > .t-photo { max-height: 62vh; overflow: hidden; }
+  .b-side > .t-photo.t-diagram { aspect-ratio: 16 / 10; }
+}
+
+/* v111: photos keep their proportions, and grow (cropping gently) only when a row needs it */
+.tile > .t-photo:not(.t-diagram) { position: relative; flex: 1 0 auto; aspect-ratio: var(--ar, 4 / 3); overflow: hidden; }
+.tile > .t-photo:not(.t-diagram) img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.b-wave > .t-photo.t-diagram { aspect-ratio: 16 / 9; flex: 1 0 auto; }
+.b-logo > .t-photo:not(.t-diagram) { padding: 0; }
+.b-logo > .t-photo img, .t-photo img[src*="refuel-logo"] { position: absolute; inset: 12% 14%; width: 72%; height: 76%; object-fit: contain; }
+.t-photo:has(img[src*="refuel-logo"]) { position: relative; }
+.b-fig > .t-photo:not(.t-diagram) { flex: 0 0 auto; }
+.b-fig > .t-photo img { object-fit: contain; padding: 0.6rem; }
+.t-photo img[src*="crux"] { object-position: 78% 50%; }
+.t-photo img[src*="neurogum"] { object-position: 50% 35%; }
+.t-photo img[src*="refuel-tall"] { object-position: 45% 62%; }
+.t-photo img[src*="model-gala"] { object-position: 50% 30%; }
+.t-photo img[src*="neurohack-tall"] { object-position: 60% 30%; }
+@media (min-width: 701px) {
+  .board > .b-side > .t-photo { flex: 0 0 46%; aspect-ratio: auto; }
+  .board > .s12.b-side > .t-photo { flex: 0 0 58%; aspect-ratio: var(--ar); }
+  .board > .tile > .t-photo:not(.t-diagram) { flex: 1 0 auto; }
+  .board > .b-side > .t-photo:not(.t-diagram) { flex: 0 0 46%; }
+  .board > .s12.b-side > .t-photo:not(.t-diagram) { flex: 0 0 58%; }
+  .board > .b-fig > .t-photo:not(.t-diagram) { flex: 0 0 auto; }
+}
+@media (max-width: 700px) {
+  .tile > .t-photo:not(.t-diagram) { flex: 0 0 auto; max-height: none; }
+  .t-photo img[src*="neurohack-tall"], .t-photo img[src*="refuel-tall"] { object-position: 50% 40%; }
+  .tile > .t-photo[style*="1333"], .tile > .t-photo[style*="880"] { aspect-ratio: 4 / 5; }
+}
+.tile.b-logo > .t-photo:not(.t-diagram) img { inset: 18% 14%; width: 72%; height: 64%; object-fit: contain; opacity: 0.7; }
+.tile > .t-photo img[src*="crux"] { object-position: 62% 50%; }
+.board > .s4:not(.b-fig) > .t-photo { aspect-ratio: 4 / 3; }
