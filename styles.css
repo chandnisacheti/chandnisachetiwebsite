@@ -364,3 +364,62 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .media-btn { position: absolute; top: calc(50% - 0.9rem); transform: translateY(-50%); z-index: 2; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: rgba(56, 62, 36, 0.72); color: var(--cream); font: inherit; font-size: 1.2rem; line-height: 1; display: grid; place-items: center; cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background-color 0.2s, border-color 0.2s; }
 .media-btn:hover { border-color: var(--cream); background: rgba(56, 62, 36, 0.92); }
 .media-btn.prev { left: 6px; } .media-btn.next { right: 6px; }
+
+/* ==========================================================
+   v90 Editorial pass: fewer "app card" tells.
+   No boxed/tinted/rounded tiles, no hover lift; entries sit on
+   hairline rules like a magazine page, photos square-cornered,
+   pairs in an uneven 7/5 rhythm, first entry of each pillar a feature.
+   ========================================================== */
+.tile { background: none; border: 0; border-radius: 0; padding: 0; min-height: 0; overflow: visible; gap: 0.55rem; transition: none; }
+.tile::before { display: none; }
+.tile:hover { transform: none; border-color: transparent; }
+.tile:hover .t-photo img { transform: none; }
+.t-photo, .tile-wide > .t-photo, .tile-full > .t-photo { position: relative; inset: auto; width: auto; margin: 0 0 0.9rem; border: 0; border-radius: 0; aspect-ratio: 3 / 2; background: rgba(228, 223, 243, 0.04); }
+.tile-wide:has(> .t-photo), .tile-full:has(> .t-photo) { padding-left: 0; }
+.t-photo img, .portrait img, .strip img { border-radius: 0; opacity: 1; }
+.portrait img { border-radius: 0; }
+.strip img { border: 0; }
+
+/* labels: quieter, and the org line reads like a photo credit */
+.t-tag { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.12em; color: var(--cream-2); }
+.t-hook, .tile-wide .t-hook { font-size: clamp(2rem, 3vw, 2.8rem); line-height: 1; margin-top: 0.1rem; }
+.t-cap { color: var(--cream-2); max-width: 44ch; }
+.t-org { border-top: 0; padding-top: 0.2rem; margin-top: 0.3rem; font-size: 0.82rem; }
+.group-label { letter-spacing: 0.12em; }
+
+/* display type: less crushed tracking */
+.hero-h { letter-spacing: -0.022em; }
+.pillar-name, .t-hook, .work-intro, .book-h { letter-spacing: -0.012em; }
+
+/* pillar jump links: plain text, not pills */
+.jump { gap: 0 1.8rem; }
+.jump a { border: 0; border-radius: 0; padding: 0.3rem 0; background: none; font-size: 1rem; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 0.35em; }
+.jump a:hover { background: none; text-decoration-color: var(--cream); }
+
+@media (min-width: 701px) {
+  .board { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(1.6rem, 3vw, 3rem); row-gap: clamp(2.4rem, 4vw, 3.4rem); align-items: start; }
+  .board > .tile { grid-column: span 6; }
+  /* pairs in an uneven 7/5 rhythm, flipping to 5/7 on alternate groups */
+  .board > .tile:first-child:nth-last-child(2) { grid-column: span 7; }
+  .board > .tile:nth-child(2):last-child { grid-column: span 5; }
+  .board > .tile:first-child:nth-last-child(2) .t-photo { aspect-ratio: 3 / 2; }
+  .board > .tile:nth-child(2):last-child .t-photo { aspect-ratio: 1 / 1; }
+  .group:nth-of-type(even) > .board > .tile:first-child:nth-last-child(2) { grid-column: span 5; }
+  .group:nth-of-type(even) > .board > .tile:nth-child(2):last-child { grid-column: span 7; }
+  .group:nth-of-type(even) > .board > .tile:first-child:nth-last-child(2) .t-photo { aspect-ratio: 1 / 1; }
+  .group:nth-of-type(even) > .board > .tile:nth-child(2):last-child .t-photo { aspect-ratio: 3 / 2; }
+  .board-3 > .tile, .board-3 > .tile-fig { grid-column: span 4; }
+  .board-3 .t-photo { aspect-ratio: 4 / 3; }
+  .tile-fig .t-photo { aspect-ratio: 7 / 6; background: none; }
+  /* text-only entries: a hairline above instead of a box */
+  .tile:not(:has(> .t-photo)) { border-top: 1px solid var(--line); padding-top: 1.2rem; }
+  /* Reflex logo sits in a normal frame */
+  .t-photo:has(img[src*="refuel-logo"]) { position: relative; }
+  /* Consciously: LWK 7 + Guest Host 5, then Panelist, ReThink, EA in threes */
+  .board:has(img[src*="lwk"]) > .tile:nth-child(1) { grid-column: span 7; }
+  .board:has(img[src*="lwk"]) > .tile:nth-child(1) .t-photo { aspect-ratio: 3 / 2; }
+  .board:has(img[src*="lwk"]) > .tile:nth-child(2) { grid-column: span 5; }
+  .board:has(img[src*="lwk"]) > .tile:nth-child(n+3) { grid-column: span 4; }
+  .board:has(img[src*="lwk"]) > .tile:nth-child(3) .t-photo { aspect-ratio: 4 / 3; }
+}
