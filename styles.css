@@ -624,3 +624,9 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
   .board > .b-nh.b-side > .t-photo:not(.t-diagram) { flex: 0 0 46%; }
 }
 .b-nh > .t-photo img { object-position: 72% 40% !important; }
+/* v123 Refuel + Reflex: both side-by-side, shorter row */
+@media (min-width: 701px) {
+  .board > .b-refuel.b-side > .t-photo:not(.t-diagram) { flex: 0 0 44%; min-height: 20rem; max-height: none; }
+  .board > .b-logo.b-side > .t-photo:not(.t-diagram) { flex-basis: 40%; min-height: 0; }
+}
+@media (min-width: 701px) { .board > .b-refuel.b-side > .t-photo:not(.t-diagram) { flex-basis: 50%; } .b-refuel > .t-photo img { object-position: 28% 45% !important; } }
