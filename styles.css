@@ -352,7 +352,7 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 }
 
 /* v84: centered mission, tighter Work→Speaking gap, media arrows */
-.work-head .work-intro { text-align: center; font-size: clamp(2.3rem, 4.8vw, 4rem); line-height: 1.08; max-width: 22ch; margin: 0.4rem auto 0.6rem; }
+.work-head .work-intro { text-align: center; font-size: clamp(2.3rem, 4.8vw, 4rem); line-height: 1.08; max-width: 34ch; margin: 0.4rem auto 0.6rem; }
 .work-head .jump { justify-content: center; }
 .work { padding-bottom: 0; }
 .work .pillar:last-child { padding-bottom: clamp(1.5rem, 3vw, 2.5rem); }
