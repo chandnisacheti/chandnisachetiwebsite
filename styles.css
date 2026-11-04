@@ -580,3 +580,8 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 #physically { --trace: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27160%27%20height%3D%2716%27%20viewBox%3D%270%200%20160%2016%27%3E%3Cpath%20d%3D%27M0%2C9%20L56%2C9%20L60%2C7.5%20L64%2C9%20L70%2C9%20L73%2C10.5%20L77%2C1.5%20L81%2C14.5%20L84%2C9%20L92%2C9%20L98%2C6.5%20L104%2C9%20L160%2C9%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.2%27%20stroke-linejoin%3D%27round%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E"); }
 #consciously .t-credit::before, #beyond .t-credit::before { display: none; }
 #consciously .t-credit, #beyond .t-credit { padding-top: 0.6rem; }
+/* v118 Reflex: smaller picture panel, phones at 90% */
+@media (min-width: 701px) {
+  .board > .b-logo.b-side > .t-photo:not(.t-diagram) { flex-basis: 36%; min-height: 13rem; }
+}
+.tile.b-logo > .t-photo:not(.t-diagram) img { inset: 12% 10%; width: 80%; height: 76%; opacity: 0.9; }
