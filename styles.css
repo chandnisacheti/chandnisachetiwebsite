@@ -619,3 +619,7 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 }
 @media (max-width: 700px) { .t-quotes { grid-template-columns: minmax(0, 1fr); } }
 @media (min-width: 701px) { .board > .s3 { grid-column: span 3; } }
+@media (min-width: 701px) {
+  .board > .b-side > .t-body { min-width: 0; }
+  .board > .b-nh.b-side > .t-photo:not(.t-diagram) { flex: 0 0 46%; }
+}
