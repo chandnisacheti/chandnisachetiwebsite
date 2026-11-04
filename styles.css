@@ -643,3 +643,12 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 @media (min-width: 701px) { .board > .b-podcast.b-side > .t-photo:not(.t-diagram) { flex-basis: 55%; } .board > .b-climate > .t-photo:not(.t-diagram) { min-height: 13rem; } }
 /* show the whole podcast cover: letterbox in its own pink, fade the whole panel */
 @media (min-width: 701px) { .board > .b-podcast.b-side > .t-photo:not(.t-diagram) { background: rgb(243 163 161); opacity: 0.65; } .board > .b-podcast.b-side > .t-photo img { object-fit: contain; opacity: 1; } }
+
+/* v125 Skills: a quiet typeset index, no chips */
+.skills { max-width: var(--max); margin: 0 auto; padding: clamp(2rem, 5vw, 3rem) var(--gutter) clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--line); }
+.sk-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 2.5rem; margin-top: 1.8rem; }
+.sk { padding-top: 1rem; border-top: 1px solid var(--line); }
+.sk-h { margin: 0 0 .55rem; font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 400; font-size: clamp(1.35rem, 1.8vw, 1.6rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--cream); }
+.sk-p { margin: 0; font-size: .95rem; line-height: 1.6; color: var(--cream-2); }
+@media (max-width: 900px) { .sk-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .sk-grid { grid-template-columns: minmax(0, 1fr); } }
