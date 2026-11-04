@@ -623,3 +623,4 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
   .board > .b-side > .t-body { min-width: 0; }
   .board > .b-nh.b-side > .t-photo:not(.t-diagram) { flex: 0 0 46%; }
 }
+.b-nh > .t-photo img { object-position: 72% 40% !important; }
