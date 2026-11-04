@@ -494,3 +494,24 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .tile.b-logo > .t-photo:not(.t-diagram) img { inset: 18% 14%; width: 72%; height: 64%; object-fit: contain; opacity: 0.7; }
 .tile > .t-photo img[src*="crux"] { object-position: 62% 50%; }
 .board > .s4:not(.b-fig) > .t-photo { aspect-ratio: 4 / 3; }
+
+/* v112: everything a size smaller */
+.tile .t-head .t-hook { font-size: clamp(1.5rem, 2vw, 1.95rem); }
+.b-feature .t-head .t-hook { font-size: clamp(1.9rem, 2.7vw, 2.5rem); }
+.b-text .t-head .t-hook { font-size: clamp(1.7rem, 2.3vw, 2.2rem); }
+.t-body { padding: 1.05rem 1.2rem 1.05rem; gap: 0.6rem; }
+.t-cap { font-size: 0.9rem; line-height: 1.5; }
+.t-metric { font-size: 1.15rem; }
+.t-credit { font-size: 0.8rem; padding-top: 1.15rem; }
+@media (min-width: 701px) {
+  .board > .s8 { grid-column: span 8; }
+  .board > .tile > .t-photo:not(.t-diagram) { max-height: 21rem; }
+  .board > .s12.b-side > .t-photo:not(.t-diagram) { max-height: 24rem; flex-basis: 50%; }
+  .b-wave > .t-photo.t-diagram { aspect-ratio: auto; height: 16rem; flex: 0 0 auto; }
+  .board > .b-side > .t-photo.t-diagram { min-height: 15rem; }
+  .board > .b-fig > .t-photo:not(.t-diagram) { max-height: 15rem; }
+  .board > .s4:not(.b-fig) > .t-photo { max-height: 15rem; }
+  .board > .s4.b-feature > .t-photo, .board > .s4 > .t-photo[style*="1333"], .board > .s4 > .t-photo[style*="880"] { max-height: 21rem; }
+}
+.tile.b-logo > .t-photo:not(.t-diagram) { background: hsl(var(--accent) / 0.07); }
+.tile.b-logo > .t-photo:not(.t-diagram) img { inset: 7% 6%; width: 88%; height: 86%; opacity: 1; }
