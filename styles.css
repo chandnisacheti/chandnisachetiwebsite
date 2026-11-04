@@ -590,3 +590,17 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 @media (min-width: 701px) { .board > .b-climate > .t-photo:not(.t-diagram) { max-height: none; flex: 1 1 auto; } .board > .b-climate > .t-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 35% 40%; } }
 @media (min-width: 701px) { .board > .b-climate > .t-photo:not(.t-diagram) { flex: 1 1 0; height: 0; min-height: 14rem; aspect-ratio: auto; } }
 @media (min-width: 701px) { .board > .b-climate > .t-body { flex: none; } }
+
+/* v120 Kind words: real notes from real people */
+.kind { max-width: var(--max); margin: 0 auto; padding: clamp(2rem, 5vw, 3rem) var(--gutter) clamp(3rem, 6vw, 5rem); border-top: 1px solid var(--line); }
+.kind-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; margin-top: 1.6rem; }
+.kind-photo { margin: 0; }
+.kind-photo img { display: block; width: 100%; height: auto; border-radius: 4px; transform: rotate(-1.2deg); box-shadow: 0 18px 40px rgba(0,0,0,.28); }
+.kind-photo figcaption { margin-top: 1rem; font-size: .82rem; color: var(--cream-2); }
+.kind-quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem 2rem; }
+.kq { margin: 0; padding-top: 1rem; border-top: 1px solid var(--line); }
+.kq p { margin: 0 0 .7rem; font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 350; font-size: 1.15rem; line-height: 1.35; color: var(--cream); }
+.kq cite { font-style: normal; font-size: .8rem; letter-spacing: .02em; color: var(--cream-2); }
+.kq-lead { grid-column: 1 / -1; border-top: 0; padding-top: 0; }
+.kq-lead p { font-size: clamp(1.7rem, 2.8vw, 2.5rem); line-height: 1.15; letter-spacing: -0.01em; }
+@media (max-width: 800px) { .kind-grid, .kind-quotes { grid-template-columns: minmax(0, 1fr); } .kind-photo { max-width: 26rem; } }
