@@ -573,3 +573,5 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 @media (min-width: 701px) {
   .board > .b-refuel > .t-photo:not(.t-diagram) { max-height: 19rem; min-height: 19rem; }
 }
+/* project result lines in the plain body font */
+.t-metric { font-family: inherit; font-variation-settings: normal; font-size: 0.95rem; font-weight: 500; line-height: 1.4; letter-spacing: 0; }
