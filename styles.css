@@ -631,3 +631,12 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 }
 @media (min-width: 701px) { .board > .b-refuel.b-side > .t-photo:not(.t-diagram) { flex-basis: 50%; } .b-refuel > .t-photo img { object-position: 28% 45% !important; } }
 @media (min-width: 701px) { #beyond .board > .s6.b-side > .t-photo:not(.t-diagram) { min-height: 15rem; } #beyond .board > .s4:not(.b-fig) > .t-photo:not(.t-diagram) { max-height: 14rem; min-height: 14rem; } }
+/* v124 Guest Host side-by-side so the Climate Week row is shorter */
+@media (min-width: 701px) {
+  .board > .b-podcast.b-side > .t-photo:not(.t-diagram) { flex: 0 0 50%; aspect-ratio: 16 / 9; align-self: center; border-right: 1px solid hsl(var(--accent) / 0.2); }
+  .board > .b-podcast.b-side > .t-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .board > .b-podcast.b-side { align-items: center; }
+  .board > .b-climate > .t-photo:not(.t-diagram) { min-height: 10rem; }
+}
+@media (min-width: 701px) { .board > .b-podcast.b-side { align-items: stretch; } .board > .b-podcast.b-side > .t-photo:not(.t-diagram) { aspect-ratio: auto; align-self: stretch; flex-basis: 48%; } .board > .b-podcast.b-side > .t-photo img { object-position: 40% 50%; } }
+@media (min-width: 701px) { .board > .b-podcast.b-side > .t-photo:not(.t-diagram) { flex-basis: 58%; } .board > .b-podcast.b-side > .t-photo img { object-position: 50% 50%; } #beyond .board > .s6.b-side > .t-photo:not(.t-diagram) { min-height: 17.5rem; } }
