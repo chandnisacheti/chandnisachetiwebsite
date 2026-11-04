@@ -608,3 +608,14 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .t-quote { margin: 0.3rem 0 0; padding-left: 0.9rem; border-left: 2px solid hsl(var(--accent) / 0.5); }
 .t-quote p { margin: 0 0 0.3rem; font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 350; font-size: 1.02rem; line-height: 1.35; color: var(--cream); }
 .t-quote cite { font-style: normal; font-size: 0.76rem; color: var(--cream-2); }
+/* v122 Wave across the full width, two leadership notes side by side */
+.t-quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: 0.4rem; }
+.t-quotes .t-quote p { font-size: 0.98rem; }
+@media (min-width: 701px) {
+  .board > .b-wavefull > .t-photo.t-diagram { flex: 0 0 28%; }
+  .board > .b-ng > .t-photo:not(.t-diagram) { flex: 1 1 0; height: 0; min-height: 14rem; max-height: none; aspect-ratio: auto; }
+  .board > .b-ng > .t-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+  .board > .b-ng > .t-body { flex: none; }
+}
+@media (max-width: 700px) { .t-quotes { grid-template-columns: minmax(0, 1fr); } }
+@media (min-width: 701px) { .board > .s3 { grid-column: span 3; } }
