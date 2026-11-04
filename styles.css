@@ -364,3 +364,63 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .media-btn { position: absolute; top: calc(50% - 0.9rem); transform: translateY(-50%); z-index: 2; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); background: rgba(56, 62, 36, 0.72); color: var(--cream); font: inherit; font-size: 1.2rem; line-height: 1; display: grid; place-items: center; cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background-color 0.2s, border-color 0.2s; }
 .media-btn:hover { border-color: var(--cream); background: rgba(56, 62, 36, 0.92); }
 .media-btn.prev { left: 6px; } .media-btn.next { right: 6px; }
+
+/* ==========================================================
+   v100 "Signal" boxes: keep the boxes, make them hers.
+   Each pillar has its own accent and its own biosignal trace
+   (EEG for Mentally, EMG for Physically, breath for Consciously,
+   heartbeat for Beyond). Boxes are flatter and tighter-cornered,
+   sized by importance, with a lab-label footer.
+   ========================================================== */
+#mentally    { --accent: 252 52% 84%; --trace: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27160%27%20height%3D%2716%27%20viewBox%3D%270%200%20160%2016%27%3E%3Cpath%20d%3D%27M0%2C8.9%20L2%2C10.8%20L4%2C10.6%20L6%2C10.2%20L8%2C9.6%20L10%2C8.7%20L12%2C9.1%20L14%2C10.7%20L16%2C9.0%20L18%2C7.1%20L20%2C6.1%20L22%2C3.6%20L24%2C4.1%20L26%2C4.9%20L28%2C7.2%20L30%2C8.2%20L32%2C9.7%20L34%2C10.0%20L36%2C9.1%20L38%2C9.7%20L40%2C10.5%20L42%2C10.5%20L44%2C11.7%20L46%2C10.2%20L48%2C7.4%20L50%2C4.5%20L52%2C4.5%20L54%2C4.0%20L56%2C5.8%20L58%2C7.6%20L60%2C8.2%20L62%2C8.7%20L64%2C7.7%20L66%2C8.7%20L68%2C9.3%20L70%2C11.7%20L72%2C12.7%20L74%2C11.3%20L76%2C9.7%20L78%2C7.3%20L80%2C6.4%20L82%2C4.6%20L84%2C5.3%20L86%2C5.7%20L88%2C6.8%20L90%2C6.6%20L92%2C6.2%20L94%2C6.6%20L96%2C7.6%20L98%2C10.1%20L100%2C11.8%20L102%2C13.3%20L104%2C12.6%20L106%2C11.0%20L108%2C8.2%20L110%2C5.8%20L112%2C6.5%20L114%2C7.0%20L116%2C7.3%20L118%2C6.5%20L120%2C6.0%20L122%2C4.6%20L124%2C6.0%20L126%2C7.2%20L128%2C9.2%20L130%2C10.9%20L132%2C13.0%20L134%2C12.4%20L136%2C9.3%20L138%2C8.8%20L140%2C7.4%20L142%2C6.9%20L144%2C7.3%20L146%2C7.6%20L148%2C6.6%20L150%2C3.9%20L152%2C4.2%20L154%2C4.1%20L156%2C7.3%20L158%2C9.2%20L160%2C11.9%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.2%27%20stroke-linejoin%3D%27round%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E"); }
+#physically  { --accent: 46 62% 70%;  --trace: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27160%27%20height%3D%2716%27%20viewBox%3D%270%200%20160%2016%27%3E%3Cpath%20d%3D%27M0%2C8.3%20L2%2C8.0%20L4%2C8.3%20L6%2C7.9%20L8%2C7.7%20L10%2C8.1%20L12%2C7.7%20L14%2C7.8%20L16%2C7.9%20L18%2C8.1%20L20%2C7.8%20L22%2C7.7%20L24%2C8.2%20L26%2C7.9%20L28%2C8.3%20L30%2C8.2%20L32%2C7.9%20L34%2C8.0%20L36%2C8.0%20L38%2C8.1%20L40%2C8.1%20L42%2C8.0%20L44%2C8.1%20L46%2C8.3%20L48%2C8.0%20L50%2C8.3%20L52%2C7.4%20L54%2C8.8%20L56%2C8.8%20L58%2C6.8%20L60%2C8.6%20L62%2C7.2%20L64%2C9.8%20L66%2C10.6%20L68%2C11.4%20L70%2C4.6%20L72%2C2.8%20L74%2C12.3%20L76%2C12.4%20L78%2C10.7%20L80%2C4.6%20L82%2C13.7%20L84%2C11.2%20L86%2C10.2%20L88%2C2.8%20L90%2C5.5%20L92%2C4.8%20L94%2C9.7%20L96%2C5.7%20L98%2C7.1%20L100%2C9.8%20L102%2C7.1%20L104%2C7.6%20L106%2C7.3%20L108%2C8.3%20L110%2C7.9%20L112%2C8.3%20L114%2C7.9%20L116%2C8.2%20L118%2C8.0%20L120%2C8.2%20L122%2C7.9%20L124%2C8.2%20L126%2C7.8%20L128%2C8.1%20L130%2C8.1%20L132%2C8.0%20L134%2C8.0%20L136%2C8.2%20L138%2C8.0%20L140%2C8.1%20L142%2C7.9%20L144%2C8.0%20L146%2C7.7%20L148%2C7.9%20L150%2C7.8%20L152%2C8.0%20L154%2C8.2%20L156%2C8.1%20L158%2C8.0%20L160%2C8.0%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.2%27%20stroke-linejoin%3D%27round%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E"); }
+#consciously { --accent: 105 30% 72%; --trace: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27160%27%20height%3D%2716%27%20viewBox%3D%270%200%20160%2016%27%3E%3Cpath%20d%3D%27M0%2C8.0%20L2%2C8.6%20L4%2C9.2%20L6%2C9.8%20L8%2C10.4%20L10%2C10.8%20L12%2C11.2%20L14%2C11.6%20L16%2C11.8%20L18%2C12.0%20L20%2C12.0%20L22%2C12.0%20L24%2C11.8%20L26%2C11.6%20L28%2C11.2%20L30%2C10.8%20L32%2C10.4%20L34%2C9.8%20L36%2C9.2%20L38%2C8.6%20L40%2C8.0%20L42%2C7.4%20L44%2C6.8%20L46%2C6.2%20L48%2C5.6%20L50%2C5.2%20L52%2C4.8%20L54%2C4.4%20L56%2C4.2%20L58%2C4.0%20L60%2C4.0%20L62%2C4.0%20L64%2C4.2%20L66%2C4.4%20L68%2C4.8%20L70%2C5.2%20L72%2C5.6%20L74%2C6.2%20L76%2C6.8%20L78%2C7.4%20L80%2C8.0%20L82%2C8.6%20L84%2C9.2%20L86%2C9.8%20L88%2C10.4%20L90%2C10.8%20L92%2C11.2%20L94%2C11.6%20L96%2C11.8%20L98%2C12.0%20L100%2C12.0%20L102%2C12.0%20L104%2C11.8%20L106%2C11.6%20L108%2C11.2%20L110%2C10.8%20L112%2C10.4%20L114%2C9.8%20L116%2C9.2%20L118%2C8.6%20L120%2C8.0%20L122%2C7.4%20L124%2C6.8%20L126%2C6.2%20L128%2C5.6%20L130%2C5.2%20L132%2C4.8%20L134%2C4.4%20L136%2C4.2%20L138%2C4.0%20L140%2C4.0%20L142%2C4.0%20L144%2C4.2%20L146%2C4.4%20L148%2C4.8%20L150%2C5.2%20L152%2C5.6%20L154%2C6.2%20L156%2C6.8%20L158%2C7.4%20L160%2C8.0%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.2%27%20stroke-linejoin%3D%27round%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E"); }
+#beyond      { --accent: 18 55% 76%;  --trace: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27160%27%20height%3D%2716%27%20viewBox%3D%270%200%20160%2016%27%3E%3Cpath%20d%3D%27M0%2C9%20L56%2C9%20L60%2C7.5%20L64%2C9%20L70%2C9%20L73%2C10.5%20L77%2C1.5%20L81%2C14.5%20L84%2C9%20L92%2C9%20L98%2C6.5%20L104%2C9%20L160%2C9%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.2%27%20stroke-linejoin%3D%27round%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E"); }
+
+.tile { border-radius: 6px; background: hsl(var(--accent, 252 52% 84%) / 0.045); border: 1px solid hsl(var(--accent, 252 52% 84%) / 0.2); transition: border-color 0.3s; }
+.tile::before { display: none; }
+.tile:hover { transform: none; border-color: hsl(var(--accent) / 0.55); }
+.tile:hover .t-photo img { transform: none; }
+.t-photo, .t-photo img { border-radius: 0; }
+.tile-wide > .t-photo, .tile-full > .t-photo { border-right: 1px solid hsl(var(--accent) / 0.2); }
+.t-photo img { opacity: 1; }
+
+/* pillar accent on labels and names */
+.pillar-name { color: hsl(var(--accent, 252 52% 84%)); }
+.t-tag { color: hsl(var(--accent)); font-weight: 600; letter-spacing: 0.12em; }
+.group-label { color: hsl(var(--accent) / 0.85); }
+.group-label::after { background: hsl(var(--accent) / 0.25); }
+.pillar { border-top-color: hsl(var(--accent) / 0.25); }
+
+/* lab-label footer: the pillar's signal trace, then name left / role right */
+.t-org { position: relative; border-top: 0; padding-top: 1.35rem; justify-content: space-between; align-items: baseline; }
+.t-org::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 16px; background: hsl(var(--accent) / 0.55);
+  -webkit-mask: var(--trace) 0 0 / 160px 16px repeat-x; mask: var(--trace) 0 0 / 160px 16px repeat-x; }
+.tile:hover .t-org::before { background: hsl(var(--accent)); animation: trace-run 2.4s linear infinite; }
+@keyframes trace-run { to { -webkit-mask-position: -160px 0; mask-position: -160px 0; } }
+@media (prefers-reduced-motion: reduce) { .tile:hover .t-org::before { animation: none; } }
+.t-org > a.t-link { width: 100%; justify-content: space-between; }
+.t-org span { text-align: right; }
+
+/* hierarchy: pairs sit 7/5 so the boxes are not identical halves */
+@media (min-width: 701px) {
+  .board { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .board > .tile { grid-column: span 6; }
+  .board > .tile-wide:first-child:nth-last-child(2) { grid-column: span 7; }
+  .board > .tile-wide:nth-child(2):last-child { grid-column: span 5; padding-left: 1.4rem; }
+  .board > .tile-wide:nth-child(2):last-child > .t-photo { position: relative; inset: auto; width: auto; margin: -1.4rem -1.4rem 0.5rem; aspect-ratio: 16 / 10; border-right: 0; border-bottom: 1px solid hsl(var(--accent) / 0.2); }
+  .board > .tile-wide:nth-child(2):last-child > .t-photo:has(img[src*="refuel-logo"]) { position: relative; }
+  .group:nth-of-type(even) > .board > .tile-wide:first-child:nth-last-child(2) { grid-column: span 5; padding-left: 1.4rem; }
+  .group:nth-of-type(even) > .board > .tile-wide:first-child:nth-last-child(2) > .t-photo { position: relative; inset: auto; width: auto; margin: -1.4rem -1.4rem 0.5rem; aspect-ratio: 16 / 10; border-right: 0; border-bottom: 1px solid hsl(var(--accent) / 0.2); }
+  .group:nth-of-type(even) > .board > .tile-wide:nth-child(2):last-child { grid-column: span 7; padding-left: calc(50% + 1.4rem); }
+  .group:nth-of-type(even) > .board > .tile-wide:nth-child(2):last-child > .t-photo { position: absolute; left: 0; top: 0; bottom: 0; width: 50%; margin: 0; aspect-ratio: auto; border-bottom: 0; border-right: 1px solid hsl(var(--accent) / 0.2); }
+  .board-3 > .tile { grid-column: span 4; }
+  .board:has(img[src*="lwk"]) > .tile:nth-child(1) { grid-column: span 7; }
+  .board:has(img[src*="lwk"]) > .tile:nth-child(2) { grid-column: span 5; }
+  .board:has(img[src*="lwk"]) > .tile:nth-child(3) { grid-column: span 4; }
+  .board:has(img[src*="lwk"]) > .tile:nth-child(4), .board:has(img[src*="lwk"]) > .tile:nth-child(5) { grid-column: span 4; }
+}
+
+/* less crushed display tracking; plain jump links */
+.hero-h { letter-spacing: -0.025em; }
+.jump a { border-radius: 4px; }
