@@ -244,7 +244,7 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 
 .t-photo img[src*="refuel-logo"] { object-fit: contain; }
 
-.t-photo img[src*="refuel-booth"] { object-position: 35% 35%; }
+.t-photo img[src*="refuel-booth"] { object-position: 35% 10%; }
 .t-photo img[src*="ucla-royce"] { object-position: 45% 50%; }
 .t-photo:has(img[src*="refuel-logo"]) { position: absolute; }
 .t-photo img[src*="refuel-logo"] { position: absolute; inset: 0; width: 100%; height: 100%; }
