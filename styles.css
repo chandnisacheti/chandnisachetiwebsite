@@ -640,3 +640,6 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 }
 @media (min-width: 701px) { .board > .b-podcast.b-side { align-items: stretch; } .board > .b-podcast.b-side > .t-photo:not(.t-diagram) { aspect-ratio: auto; align-self: stretch; flex-basis: 48%; } .board > .b-podcast.b-side > .t-photo img { object-position: 40% 50%; } }
 @media (min-width: 701px) { .board > .b-podcast.b-side > .t-photo:not(.t-diagram) { flex-basis: 58%; } .board > .b-podcast.b-side > .t-photo img { object-position: 50% 50%; } #beyond .board > .s6.b-side > .t-photo:not(.t-diagram) { min-height: 17.5rem; } }
+@media (min-width: 701px) { .board > .b-podcast.b-side > .t-photo:not(.t-diagram) { flex-basis: 55%; } .board > .b-climate > .t-photo:not(.t-diagram) { min-height: 13rem; } }
+/* show the whole podcast cover: letterbox in its own pink, fade the whole panel */
+@media (min-width: 701px) { .board > .b-podcast.b-side > .t-photo:not(.t-diagram) { background: rgb(243 163 161); opacity: 0.65; } .board > .b-podcast.b-side > .t-photo img { object-fit: contain; opacity: 1; } }
