@@ -652,3 +652,39 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .sk-p { margin: 0; font-size: .95rem; line-height: 1.6; color: var(--cream-2); }
 @media (max-width: 900px) { .sk-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .sk-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* v126 Stories: teaser under My story + its own page */
+.st-teaser { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter) clamp(3rem, 6vw, 5rem); }
+.st-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.st-all { font-size: .9rem; color: var(--cream); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.st-all:hover { border-color: var(--cream); }
+.st-cards { display: grid; grid-template-columns: 5fr 7fr; gap: 14px; margin-top: 1.4rem; }
+.st-card { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: .45rem; min-height: 15rem; padding: 1.5rem; border: 1px solid var(--line); border-radius: 6px; background: var(--tile); color: var(--cream); text-decoration: none; overflow: hidden; transition: border-color .2s; }
+.st-card:hover { border-color: rgba(228,223,243,.5); }
+.st-card-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .32; }
+.st-card-photo > span { position: relative; }
+.st-kicker { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cream-2); margin: 0; }
+.st-title { font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 400; font-size: clamp(1.7rem, 2.6vw, 2.4rem); line-height: 1.05; letter-spacing: -0.012em; }
+.st-dek { font-size: .95rem; line-height: 1.5; color: var(--cream-2); max-width: 44ch; }
+@media (max-width: 700px) { .st-cards { grid-template-columns: minmax(0, 1fr); } .st-card { min-height: 12rem; } }
+
+.sp { max-width: var(--max); margin: 0 auto; padding: clamp(7rem, 12vw, 9rem) var(--gutter) 4rem; }
+.sp-h { margin: .8rem 0 0; max-width: 20ch; font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 350; font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.02; letter-spacing: -0.02em; color: var(--cream); }
+.sp-stories { margin-top: clamp(3rem, 6vw, 5rem); display: grid; gap: clamp(3rem, 6vw, 4.5rem); }
+.sp-story { padding-top: 1.6rem; border-top: 1px solid var(--line); scroll-margin-top: 6rem; }
+.sp-story-photo { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+.sp-fig { margin: 0; } .sp-fig img { display: block; width: 100%; height: auto; border-radius: 4px; }
+.sp-title { margin: .5rem 0 1rem; font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 400; font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1.02; letter-spacing: -0.015em; color: var(--cream); }
+.sp-body { max-width: 62ch; font-size: 1.05rem; line-height: 1.7; color: var(--cream); }
+.sp-posts { margin-top: clamp(4rem, 8vw, 6rem); padding-top: 1.6rem; border-top: 1px solid var(--line); }
+.sp-post-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 1.4rem; }
+.sp-post { display: flex; flex-direction: column; gap: .6rem; padding: 1.4rem 1.5rem; border: 1px solid var(--line); border-radius: 6px; background: var(--tile); color: var(--cream); text-decoration: none; transition: border-color .2s; }
+.sp-post:hover { border-color: rgba(228,223,243,.5); }
+.sp-date { font-size: .78rem; color: var(--cream-2); }
+.sp-post-title { font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-size: 1.45rem; line-height: 1.1; }
+.sp-post-dek { font-size: .92rem; line-height: 1.55; color: var(--cream-2); }
+.sp-read { margin-top: auto; padding-top: .6rem; font-size: .82rem; }
+.sp-foot { max-width: var(--max); margin: 0 auto; padding: 2rem var(--gutter) 4rem; border-top: 1px solid var(--line); }
+.sp-foot a { color: var(--cream-2); text-decoration: none; font-size: .9rem; }
+@media (max-width: 800px) { .sp-story-photo, .sp-post-grid { grid-template-columns: minmax(0, 1fr); } }
+.sp-fig img { aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; max-height: 34rem; }
