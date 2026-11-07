@@ -688,3 +688,5 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .sp-foot a { color: var(--cream-2); text-decoration: none; font-size: .9rem; }
 @media (max-width: 800px) { .sp-story-photo, .sp-post-grid { grid-template-columns: minmax(0, 1fr); } }
 .sp-fig img { aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; max-height: 34rem; }
+/* v127 blog links */
+.sp-link { color: var(--cream); font-size: .9rem; text-underline-offset: 3px; }
