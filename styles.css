@@ -3,7 +3,7 @@
 @font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("fonts/hanken-grotesk-latin-wght-normal.woff2") format("woff2-variations"), url("fonts/hanken-grotesk-latin-wght-normal.woff2") format("woff2"); }
 
 :root {
-  --olive: #383E24;
+  --olive: #253C38;
   --cream: #E4DFF3;
   --cream-2: #BCB7C9;
   --line: rgba(228, 223, 243, 0.2);
@@ -11,7 +11,7 @@
   --ph-bg: #F3E7A8;
   --ph-ink: #3A3000;
   --hue: 75;
-  --glow-h: 62;          /* the one glow color: warm olive-gold */            /* set by JS from the cursor */
+  --glow-h: 168;         /* the one glow color: warm olive-gold */            /* set by JS from the cursor */
 
   --title: "Fraunces", "Didot", "Bodoni 72", Georgia, serif;
   --title-set: 350 / normal;
@@ -52,7 +52,7 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 
 /* Bar */
 .bar { position: sticky; top: 0; z-index: 20; transition: background-color 0.3s; }
-.bar.is-scrolled { background: rgba(56, 62, 36, 0.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.bar.is-scrolled { background: rgba(37, 60, 56, 0.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
 .bar-inner { max-width: var(--max); margin: 0 auto; padding: 22px var(--gutter); display: flex; align-items: center; gap: 1.5rem; }
 .brand { font-family: var(--sans); font-weight: 400; font-size: 1.15rem; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
 .bar nav { margin-left: auto; }
@@ -726,6 +726,6 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 @media (max-width: 900px) { .bi-grid { grid-template-columns: minmax(0, 1fr); } .bi-card { min-height: 15rem; } }
 @media (max-width: 600px) { .bl-row { grid-template-columns: minmax(0, 1fr) 1.2rem; gap: .4rem 1rem; } .bl-row .sp-date { grid-column: 1 / -1; } .po-more-grid { grid-template-columns: minmax(0, 1fr); } }
 .bi-card-photo img { z-index: 0; opacity: .5; }
-.bi-card-photo::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(40,45,26,.95) 15%, rgba(40,45,26,.35) 75%); }
+.bi-card-photo::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(27,44,41,.95) 15%, rgba(27,44,41,.35) 75%); }
 .bi-card-photo > span { z-index: 2; }
 @media (max-width: 900px) { .bi-card:not(.bi-card-photo) { min-height: 0; } }
