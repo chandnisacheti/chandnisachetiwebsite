@@ -754,3 +754,20 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .po-fig-phone figcaption { margin-top: .8rem; font-size: .85rem; color: var(--cream-2); text-align: center; }
 .st-card-wide { grid-column: 1 / -1; min-height: 11rem; }
 .st-card-wide .st-dek { max-width: 40rem; }
+.st-cards-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .st-cards-3 { grid-template-columns: minmax(0, 1fr); } }
+
+/* Phone polish (2026-11-09) */
+@media (max-width: 700px) {
+  /* swipe on phones; the round arrows covered the photos */
+  .media-btn { display: none; }
+  /* small caps labels were 11.5px, too small to read on a phone */
+  .st-kicker, .group-label, .po-part { font-size: .8rem; }
+  /* bigger tap targets without changing the layout */
+  .t-credit a, .sp-foot a, .po-back, .st-all, .foot a, .po-body a, .bl-row a { position: relative; }
+  .t-credit a::after, .sp-foot a::after, .po-back::after, .st-all::after, .foot a::after { content: ""; position: absolute; inset: -12px -6px; }
+  .po-back { padding: .4rem 0; }
+  .sp-foot a { display: inline-block; padding: .6rem 0; }
+  .copy { padding: .4rem .9rem; }
+  .st-card-photo .st-dek, .bi-card-photo .st-dek { color: var(--cream); }
+}
