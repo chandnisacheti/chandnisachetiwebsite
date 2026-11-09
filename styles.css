@@ -825,3 +825,47 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 60; pointer-ev
 
 @media (prefers-reduced-motion: reduce) { .sig-dot { animation: none; } .st-card, .bi-card, .nm-card, .po-next { transition: none; } }
 .pillar-head .sig { flex: 1 0 100%; }
+
+/* ==========================================================
+   Design round 2 (2026-11-09): motion with intent
+   ========================================================== */
+/* smooth fades between pages (Chrome, Edge, Safari 18+) */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .45s; }
+
+/* hero: each line rises out of a mask on load */
+.js-motion .hero-h > span { overflow: hidden; padding-bottom: .06em; margin-bottom: -.06em; }
+.js-motion .hero-h > span > .rise { display: inline-block; transform: translateY(105%); animation: rise 1.1s var(--ease) forwards; }
+.js-motion .hero-h > span:nth-child(2) > .rise { animation-delay: .12s; }
+.js-motion .hero-h > span:nth-child(3) > .rise { animation-delay: .24s; }
+.js-motion .hero-sub { opacity: 0; animation: fadeup .9s var(--ease) .55s forwards; }
+@keyframes rise { to { transform: none; } }
+@keyframes fadeup { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* big statements light up word by word as you scroll */
+.wr .w { opacity: .18; transition: opacity .25s linear; }
+.wr .w.on { opacity: 1; }
+
+/* photos develop like film as they enter */
+.js-motion .portrait img, .js-motion .t-photo:not(.t-diagram) img { clip-path: inset(12% 6% 12% 6% round 6px); transform: scale(1.08); filter: saturate(.4) brightness(.8);
+  transition: clip-path 1.2s var(--ease), transform 1.6s var(--ease), filter 1.6s var(--ease); }
+.js-motion .portrait.dev img, .js-motion .t-photo.dev img { clip-path: inset(0 0 0 0 round 4px); transform: none; filter: none; }
+
+/* custom cursor: a soft ring that reacts to what you point at (mouse only) */
+.cur, .cur-dot { position: fixed; left: 0; top: 0; z-index: 80; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity .3s; }
+.cur { width: 34px; height: 34px; margin: -17px 0 0 -17px; border: 1px solid rgba(228,223,243,.7); transition: opacity .3s, width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease), background-color .3s, border-color .3s; display: grid; place-items: center; }
+.cur-dot { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; background: var(--cream); }
+.has-cur .cur, .has-cur .cur-dot { opacity: 1; }
+.cur.big { width: 74px; height: 74px; margin: -37px 0 0 -37px; background: rgba(228,223,243,.1); border-color: rgba(228,223,243,.35); }
+.cur-label { font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cream); opacity: 0; transition: opacity .2s; }
+.cur.big .cur-label { opacity: 1; }
+.has-cur, .has-cur a, .has-cur button { cursor: none; }
+
+/* magnetic buttons */
+.btn, .nav-cta, .nm-play { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js-motion .hero-h > span > .rise, .js-motion .hero-sub { animation: none; transform: none; opacity: 1; }
+  .js-motion .portrait img, .js-motion .t-photo img { clip-path: none; transform: none; filter: none; transition: none; }
+  .wr .w { opacity: 1; }
+}

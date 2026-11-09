@@ -278,3 +278,92 @@
     window.addEventListener('scroll', upd, { passive: true }); upd();
   }
 })();
+
+// ---- Design round 2: hero rise, word-by-word statements, film photos, cursor, magnets ----
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  var root = document.documentElement;
+  root.classList.add('js-motion');
+
+  // Hero lines rise from a mask.
+  Array.prototype.forEach.call(document.querySelectorAll('.hero-h > span'), function (line) {
+    var wrap = document.createElement('span'); wrap.className = 'rise';
+    while (line.firstChild) wrap.appendChild(line.firstChild);
+    line.appendChild(wrap);
+  });
+
+  // Statements light up word by word, tied to scroll position.
+  var statements = Array.prototype.slice.call(document.querySelectorAll('.mission, .work-intro'));
+  statements.forEach(function (el) {
+    el.classList.add('wr');
+    var walk = function (node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.textContent.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            var s = document.createElement('span'); s.className = 'w'; s.textContent = part; frag.appendChild(s);
+          });
+          node.replaceChild(frag, n);
+        } else if (n.nodeType === 1) walk(n);
+      });
+    };
+    walk(el);
+  });
+  var lightUp = function () {
+    var vh = window.innerHeight;
+    statements.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      var p = (vh * 0.85 - r.top) / (vh * 0.5);         // 0 when entering, 1 when it reaches ~35% from top
+      var words = el.querySelectorAll('.w'), n = Math.round(Math.max(0, Math.min(1, p)) * words.length);
+      for (var i = 0; i < words.length; i++) words[i].classList.toggle('on', i < n);
+    });
+  };
+  window.addEventListener('scroll', lightUp, { passive: true }); window.addEventListener('resize', lightUp); lightUp();
+
+  // Photos develop in as they enter the viewport.
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('dev'); io.unobserve(e.target); } }); }, { threshold: 0.2 });
+    Array.prototype.forEach.call(document.querySelectorAll('.portrait, .t-photo:not(.t-diagram)'), function (f) { io.observe(f); });
+  } else {
+    Array.prototype.forEach.call(document.querySelectorAll('.portrait, .t-photo'), function (f) { f.classList.add('dev'); });
+  }
+
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  // Custom cursor.
+  var ring = document.createElement('div'); ring.className = 'cur'; ring.innerHTML = '<span class="cur-label"></span>';
+  var dot = document.createElement('div'); dot.className = 'cur-dot';
+  document.body.appendChild(ring); document.body.appendChild(dot);
+  var label = ring.firstChild, mx = -100, my = -100, rx = -100, ry = -100;
+  window.addEventListener('pointermove', function (e) {
+    mx = e.clientX; my = e.clientY; dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+    root.classList.add('has-cur');
+  }, { passive: true });
+  document.addEventListener('mouseleave', function () { root.classList.remove('has-cur'); });
+  (function loop() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)'; requestAnimationFrame(loop); })();
+  var hoverText = function (el) {
+    if (el.closest('.st-card, .bi-card, .po-next')) return 'Read';
+    if (el.closest('.nm-play')) return 'Play';
+    return '';
+  };
+  document.addEventListener('pointerover', function (e) {
+    var t = e.target; var txt = hoverText(t);
+    var interactive = t.closest('a, button');
+    ring.classList.toggle('big', !!interactive && !!txt);
+    label.textContent = txt;
+    ring.style.borderColor = interactive && !txt ? 'rgba(228,223,243,1)' : '';
+  });
+
+  // Magnetic buttons pull gently toward the cursor.
+  Array.prototype.forEach.call(document.querySelectorAll('.btn, .nav-cta, .nm-play'), function (b) {
+    b.addEventListener('pointermove', function (e) {
+      var r = b.getBoundingClientRect(), x = e.clientX - (r.left + r.width / 2), y = e.clientY - (r.top + r.height / 2);
+      b.style.transform = 'translate(' + x * 0.25 + 'px,' + y * 0.35 + 'px)';
+    });
+    b.addEventListener('pointerleave', function () { b.style.transition = 'transform .5s cubic-bezier(.22,1,.36,1)'; b.style.transform = ''; setTimeout(function () { b.style.transition = ''; }, 500); });
+  });
+})();
