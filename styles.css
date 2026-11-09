@@ -749,3 +749,6 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .po-copy { position: absolute; top: .7rem; right: .7rem; margin: 0; z-index: 1; background: rgba(27,44,41,.9); }
 .bi-card-wide { grid-column: 1 / -1; min-height: 12rem; }
 .bi-card-wide .st-dek { max-width: 40rem; }
+.po-fig-phone { margin: 2rem auto 2.4rem; max-width: 22rem; }
+.po-fig-phone img { aspect-ratio: auto; height: auto; object-fit: contain; border-radius: 14px; border: 1px solid var(--line); }
+.po-fig-phone figcaption { margin-top: .8rem; font-size: .85rem; color: var(--cream-2); text-align: center; }
