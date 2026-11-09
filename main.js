@@ -183,3 +183,35 @@
   media.scrollLeft = 1; pos = 1;
   requestAnimationFrame(tick);
 })();
+
+// ---- Live "This morning on Neuro Morning" player ----
+(function () {
+  'use strict';
+  var root = document.querySelector('[data-nm]');
+  if (!root || !window.fetch || !window.DOMParser) return;
+  var FEED = 'https://chandnisacheti.github.io/daily-neuro-podcast/feed.xml';
+  fetch(FEED, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (xml) {
+    var doc = new DOMParser().parseFromString(xml, 'application/xml');
+    var item = doc.querySelector('item');
+    if (!item) return;
+    var title = (item.querySelector('title') || {}).textContent || '';
+    title = title.replace(/^Neuro Morning:\s*/i, '');
+    var enc = item.querySelector('enclosure');
+    if (!enc) return;
+    var date = new Date((item.querySelector('pubDate') || {}).textContent || '');
+    var dur = item.getElementsByTagNameNS('*', 'duration')[0];
+    var secs = dur ? parseInt(dur.textContent, 10) : 0;
+    var when = isNaN(date) ? '' : date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+    root.querySelector('[data-nm-title]').textContent = title;
+    root.querySelector('[data-nm-meta]').textContent = when + (secs ? ' · ' + Math.round(secs / 60) + ' min' : '');
+    var audio = root.querySelector('[data-nm-audio]');
+    audio.src = enc.getAttribute('url');
+    var play = root.querySelector('[data-nm-play]');
+    var bar = root.querySelector('[data-nm-progress]');
+    play.addEventListener('click', function () { if (audio.paused) audio.play(); else audio.pause(); });
+    audio.addEventListener('play', function () { root.classList.add('is-playing'); play.setAttribute('aria-label', 'Pause'); });
+    audio.addEventListener('pause', function () { root.classList.remove('is-playing'); play.setAttribute('aria-label', 'Play this morning’s episode'); });
+    audio.addEventListener('timeupdate', function () { if (audio.duration) bar.style.width = (audio.currentTime / audio.duration * 100) + '%'; });
+    root.hidden = false;
+  }).catch(function () { /* stay hidden */ });
+})();

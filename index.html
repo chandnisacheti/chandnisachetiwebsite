@@ -20,7 +20,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=50">
+<link rel="stylesheet" href="styles.css?v=51">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -93,6 +93,21 @@
         <span class="st-dek">Every day, do something with a 50% chance of succeeding. Or failing.</span>
       </a>
     </div>
+  </section>
+
+  <!-- Live: this morning's Neuro Morning episode (filled from the podcast feed; hidden if it can't load) -->
+  <section class="nm" aria-labelledby="nm-h" data-nm hidden>
+    <div class="nm-card">
+      <button class="nm-play" type="button" aria-label="Play this morning's episode" data-nm-play><span class="nm-icon" aria-hidden="true"></span></button>
+      <div class="nm-text">
+        <p class="st-kicker" id="nm-h">This morning on Neuro Morning</p>
+        <p class="nm-title" data-nm-title></p>
+        <div class="nm-bar" aria-hidden="true"><span data-nm-progress></span></div>
+        <p class="nm-meta"><span data-nm-meta></span> &#183; <a href="daily-podcast.html">How I built it &#8594;</a></p>
+      </div>
+      <svg class="nm-wave" viewBox="0 0 240 60" aria-hidden="true"><path d="M0,30 L60,30 C70,30 72,12 80,12 C88,12 90,48 98,48 C106,48 108,6 118,6 C128,6 130,54 140,54 C150,54 152,18 160,18 C168,18 170,30 180,30 L240,30" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div>
+    <audio preload="none" data-nm-audio></audio>
   </section>
 
   <section class="work" id="work" aria-labelledby="work-h">
@@ -397,6 +412,6 @@
 </footer>
 
 <div class="toast" role="status" aria-live="polite" data-toast></div>
-<script src="main.js?v=4"></script>
+<script src="main.js?v=5"></script>
 </body>
 </html>

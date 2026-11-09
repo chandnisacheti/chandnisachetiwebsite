@@ -771,3 +771,26 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
   .copy { padding: .4rem .9rem; }
   .st-card-photo .st-dek, .bi-card-photo .st-dek { color: var(--cream); }
 }
+
+/* Live Neuro Morning player on the homepage */
+.nm { max-width: var(--max); margin: 14px auto 0; padding: 0 var(--gutter); }
+.nm[hidden] { display: none; }
+.nm-card { position: relative; display: flex; align-items: center; gap: 1.3rem; padding: 1.3rem 1.5rem; border: 1px solid var(--line); border-radius: 6px; background: var(--tile); overflow: hidden; }
+.nm-play { flex: none; width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--cream); background: transparent; color: var(--cream); cursor: pointer; display: grid; place-items: center; transition: background-color .2s, color .2s; }
+.nm-play:hover, .nm.is-playing .nm-play { background: var(--cream); color: var(--olive); }
+.nm-icon { width: 0; height: 0; border-left: 14px solid currentColor; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 4px; }
+.nm.is-playing .nm-icon { width: 14px; height: 16px; border: 0; margin: 0; background: linear-gradient(90deg, currentColor 0 35%, transparent 35% 65%, currentColor 65%); }
+.nm-text { flex: 1; min-width: 0; position: relative; z-index: 1; }
+.nm-title { margin: .35rem 0 .7rem; font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 350; font-size: clamp(1.25rem, 2.4vw, 1.7rem); line-height: 1.15; color: var(--cream); }
+.nm-bar { height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.nm-bar span { display: block; height: 100%; width: 0; background: var(--cream); transition: width .3s linear; }
+.nm-meta { margin: .6rem 0 0; font-size: .85rem; color: var(--cream-2); }
+.nm-meta a { color: var(--cream); text-underline-offset: 3px; }
+.nm-wave { position: absolute; right: 1.2rem; top: 50%; width: 220px; transform: translateY(-50%); color: var(--cream); opacity: .14; }
+.nm.is-playing .nm-wave { opacity: .35; animation: nm-pulse 1.6s ease-in-out infinite; }
+@keyframes nm-pulse { 50% { transform: translateY(-50%) scaleY(.55); } }
+@media (prefers-reduced-motion: reduce) { .nm.is-playing .nm-wave { animation: none; } }
+@media (max-width: 700px) { .nm-card { padding: 1.1rem; gap: 1rem; align-items: flex-start; } .nm-play { width: 48px; height: 48px; } .nm-wave { display: none; } }
+@media (min-width: 701px) { .nm-text { padding-right: 250px; } }
+.st-teaser:has(+ .nm:not([hidden])) { padding-bottom: 0; }
+.nm { padding-bottom: clamp(3rem, 6vw, 5rem); }
