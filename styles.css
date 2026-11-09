@@ -804,21 +804,14 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 60; pointer-ev
 ::selection { background: var(--cream); color: var(--olive); }
 
 /* hero: a live signal you can change with your cursor */
-.sig { position: relative; margin: clamp(2.5rem, 6vw, 4.5rem) calc(-1 * var(--gutter)) 0; }
+.sig { position: relative; margin: 1.6rem 0 0; }
 .sig-canvas { display: block; width: 100%; height: clamp(90px, 12vw, 150px); }
-.sig-read { display: flex; align-items: center; gap: .6rem; margin: .6rem var(--gutter) 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .74rem; letter-spacing: .06em; color: var(--cream-2); }
+.sig-read { display: flex; align-items: center; gap: .6rem; margin: .4rem 0 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .74rem; letter-spacing: .06em; color: var(--cream-2); }
 .sig-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cream); box-shadow: 0 0 0 0 rgba(228,223,243,.6); animation: sig-live 2s infinite; }
 @keyframes sig-live { 70% { box-shadow: 0 0 0 7px rgba(228,223,243,0); } 100% { box-shadow: 0 0 0 0 rgba(228,223,243,0); } }
 .sig-state { color: var(--cream); text-transform: uppercase; letter-spacing: .14em; }
 .sig-hint { margin-left: auto; opacity: .7; }
 @media (max-width: 700px) { .sig-hint { display: none; } }
-
-/* editorial section numbers */
-main { counter-reset: sec; }
-main > section > h2.label, main > section > .st-head > h2.label, main > section > .work-head > h2.label { counter-increment: sec; }
-main > section > h2.label::before, main > section > .st-head > h2.label::before, main > section > .work-head > h2.label::before,
-.intro h2.label::before { content: counter(sec, decimal-leading-zero); display: inline-block; margin-right: .9em; font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 300; font-size: 1.5em; letter-spacing: 0; vertical-align: -.12em; color: var(--cream-2); }
-.intro h2.label { counter-increment: sec; }
 
 /* cards lean toward your cursor, with light that follows it */
 .st-card, .bi-card, .nm-card, .po-next { transform-style: preserve-3d; transition: transform .35s var(--ease, ease), border-color .2s; }
@@ -831,6 +824,4 @@ main > section > h2.label::before, main > section > .st-head > h2.label::before,
 .read-progress { position: fixed; left: 0; top: 0; height: 2px; width: 100%; z-index: 70; transform-origin: 0 50%; transform: scaleX(0); background: var(--cream); pointer-events: none; }
 
 @media (prefers-reduced-motion: reduce) { .sig-dot { animation: none; } .st-card, .bi-card, .nm-card, .po-next { transition: none; } }
-main > section > h2.label::before, main > section > .st-head > h2.label::before, main > section > .work-head > h2.label::before, .intro h2.label::before { font-variant-numeric: lining-nums; font-feature-settings: "lnum" 1; }
-@media (min-width: 701px) { .hero { padding-top: clamp(3rem, 6vw, 5.5rem); padding-bottom: clamp(3rem, 6vw, 5rem); } .sig { margin-top: clamp(1.5rem, 3vw, 2.5rem); } }
-main > section > h2.label::before, main > section > .st-head > h2.label::before, main > section > .work-head > h2.label::before, .intro h2.label::before { font-family: var(--sans); font-weight: 300; font-size: 1.35em; letter-spacing: .02em; vertical-align: -.08em; }
+.pillar-head .sig { flex: 1 0 100%; }
