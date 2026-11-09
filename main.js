@@ -215,3 +215,66 @@
     root.hidden = false;
   }).catch(function () { /* stay hidden */ });
 })();
+
+// ---- Design round 1: live hero signal, card tilt, reading progress ----
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero signal: a calm alpha rhythm that turns into faster beta when you move.
+  var cv = document.querySelector('[data-sig]');
+  if (cv && cv.getContext) {
+    var ctx = cv.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var band = document.querySelector('[data-sig-band]'), state = document.querySelector('[data-sig-state]');
+    var W = 0, H = 0, t = 0, energy = 0, target = 0, lastX = null, lastY = null, shown = '';
+    var size = function () { var r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    size(); window.addEventListener('resize', size);
+    var kick = function (x, y) { if (lastX !== null) target = Math.min(1, target + Math.hypot(x - lastX, y - lastY) / 260); lastX = x; lastY = y; };
+    window.addEventListener('pointermove', function (e) { kick(e.clientX, e.clientY); }, { passive: true });
+    window.addEventListener('scroll', function () { kick(0, window.scrollY); }, { passive: true });
+    var draw = function () {
+      target *= 0.96; energy += (target - energy) * 0.08;
+      var f = 10 + energy * 16;                 // 10 Hz alpha -> ~26 Hz beta
+      var amp = H * (0.16 + energy * 0.16);
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineWidth = 1.4; ctx.lineJoin = 'round';
+      var g = ctx.createLinearGradient(0, 0, W, 0);
+      g.addColorStop(0, 'rgba(228,223,243,0)'); g.addColorStop(.15, 'rgba(228,223,243,.85)'); g.addColorStop(.85, 'rgba(228,223,243,.85)'); g.addColorStop(1, 'rgba(228,223,243,0)');
+      ctx.strokeStyle = g; ctx.beginPath();
+      for (var x = 0; x <= W; x += 2) {
+        var u = x / W * 6;                        // ~6 "seconds" across the screen
+        var spindle = 0.55 + 0.45 * Math.sin(u * 1.3 - t * 0.7);
+        var y = H / 2 + amp * spindle * Math.sin(2 * Math.PI * (f / 10) * (u * 1.6) - t * 3)
+              + amp * 0.25 * Math.sin(u * 9.1 + t * 1.7) * energy
+              + amp * 0.12 * Math.sin(u * 3.3 - t);
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      var label = energy > 0.35 ? 'β ' + Math.round(f) + ' Hz' : 'α ' + Math.round(f) + ' Hz';
+      var st = energy > 0.35 ? 'focused' : 'calm';
+      if (label + st !== shown) { band.textContent = label; state.textContent = st; shown = label + st; }
+      t += 0.016;
+      if (!reduce) requestAnimationFrame(draw);
+    };
+    draw();
+  }
+
+  // Cards lean slightly toward the cursor (mouse only).
+  if (!reduce && window.matchMedia('(hover: hover)').matches) {
+    Array.prototype.forEach.call(document.querySelectorAll('.st-card, .bi-card, .po-next, .nm-card'), function (c) {
+      c.addEventListener('pointermove', function (e) {
+        var r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        c.style.setProperty('--mx', px * 100 + '%'); c.style.setProperty('--my', py * 100 + '%');
+        c.style.transform = 'perspective(900px) rotateX(' + ((0.5 - py) * 4) + 'deg) rotateY(' + ((px - 0.5) * 5) + 'deg) translateY(-2px)';
+      });
+      c.addEventListener('pointerleave', function () { c.style.transform = ''; });
+    });
+  }
+
+  // Reading progress bar on blog posts.
+  if (document.body.classList.contains('page-post')) {
+    var bar = document.createElement('div'); bar.className = 'read-progress'; document.body.appendChild(bar);
+    var upd = function () { var h = document.documentElement.scrollHeight - window.innerHeight; bar.style.transform = 'scaleX(' + (h > 0 ? window.scrollY / h : 0) + ')'; };
+    window.addEventListener('scroll', upd, { passive: true }); upd();
+  }
+})();
