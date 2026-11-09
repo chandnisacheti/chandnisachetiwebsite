@@ -729,3 +729,26 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .bi-card-photo::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(27,44,41,.95) 15%, rgba(27,44,41,.35) 75%); }
 .bi-card-photo > span { z-index: 2; }
 @media (max-width: 900px) { .bi-card:not(.bi-card-photo) { min-height: 0; } }
+/* Long-form guide posts */
+.po-lede { font-size: 1.22rem; line-height: 1.65; }
+.po-body .po-toc { list-style: none; padding: 0; margin: 0 0 2.5rem; display: flex; flex-wrap: wrap; gap: .6rem; }
+.po-body .po-toc li { margin: 0; }
+.po-toc a { display: inline-block; text-decoration: none; font-size: .9rem; border: 1px solid var(--line); border-radius: 999px; padding: .35rem 1rem; color: var(--cream); transition: border-color .2s, background-color .2s; }
+.po-toc a:hover { border-color: var(--cream); background: var(--tile); }
+.po-body h2 { margin: 3.5rem 0 1.4rem; padding-top: 2rem; border-top: 1px solid var(--line); font-family: var(--title); font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0; font-weight: 350; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.05; letter-spacing: -0.015em; scroll-margin-top: 5rem; }
+.po-part { display: block; margin-bottom: .7rem; font-family: var(--sans); font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--cream-2); }
+.po-body h3 { margin: 2.4rem 0 .8rem; font-family: var(--sans); font-size: 1.15rem; font-weight: 650; line-height: 1.35; }
+.po-body ul { margin: 0 0 1.25em; padding-left: 1.2rem; }
+.po-body li { margin: 0 0 .6em; }
+.po-body a:not(.sp-link) { color: var(--cream); text-underline-offset: 3px; }
+.po-body code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .86em; background: var(--tile); border: 1px solid var(--line); border-radius: 4px; padding: .05em .35em; overflow-wrap: anywhere; }
+.po-body pre { margin: 0 0 1.5em; padding: 1.1rem 1.2rem; background: rgba(0,0,0,.18); border: 1px solid var(--line); border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: .82rem; line-height: 1.6; }
+.po-body pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.po-code { position: relative; }
+.po-code pre { padding-top: 2.6rem; max-height: 32rem; overflow-y: auto; }
+.po-copy { position: absolute; top: .7rem; right: .7rem; margin: 0; z-index: 1; background: rgba(27,44,41,.9); }
+.bi-card-wide { grid-column: 1 / -1; min-height: 12rem; }
+.bi-card-wide .st-dek { max-width: 40rem; }
+.po-fig-phone { margin: 2rem auto 2.4rem; max-width: 22rem; }
+.po-fig-phone img { aspect-ratio: auto; height: auto; object-fit: contain; border-radius: 14px; border: 1px solid var(--line); }
+.po-fig-phone figcaption { margin-top: .8rem; font-size: .85rem; color: var(--cream-2); text-align: center; }

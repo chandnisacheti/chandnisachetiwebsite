@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>I built my own morning podcast | Chandni Sacheti</title>
+<meta name="description" content="How I built a free AI podcast that turns the day's neurotech and health tech news into a 10-minute show on Spotify every morning, and a step-by-step guide with the exact prompts so you can build your own.">
+<meta property="og:title" content="I built my own morning podcast">
+<meta property="og:description" content="A free AI news podcast on Spotify every morning. How I built it, and how you can build yours with the exact prompts.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://chandnisacheti.com/daily-podcast.html">
+<meta property="og:site_name" content="Chandni Sacheti">
+<meta property="og:image" content="https://chandnisacheti.com/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Chandni Sacheti, Neurotech Builder &amp; Founder">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://chandnisacheti.com/assets/og.jpg">
+<meta name="theme-color" content="#253C33">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css?v=48">
+</head>
+<body class="page-stories page-post">
+<a class="skip" href="#main">Skip to content</a>
+<div class="glow" aria-hidden="true"><span class="glow-a"></span><span class="glow-b"></span></div>
+
+<header class="bar">
+  <div class="bar-inner">
+    <a class="brand" href="index.html">Chandni Sacheti</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu><span class="menu-lines" aria-hidden="true"></span><span class="menu-label">Menu</span></button>
+    <nav aria-label="Main" id="site-nav">
+      <ul>
+        <li><a href="index.html#about">My story</a></li>
+        <li><a href="blog.html" aria-current="page">Blog</a></li>
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#speaking">Speaking &amp; Features</a></li>
+        <li><a href="index.html#book" class="nav-cta">Book a chat</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="po">
+  <article class="po-art">
+    <a class="po-back" href="blog.html">&#8592; Blog</a>
+    <p class="st-kicker">Build log &amp; guide</p>
+    <h1 class="po-h">I built my own morning podcast</h1>
+    <div class="po-body">
+      <p class="po-lede">Every morning at 5 AM, a 10-minute show on the day&#8217;s neurotech and health tech news is waiting in my Spotify. Before my run is over, two AI hosts have walked me through the five stories that matter most to me, the trends connecting them, and what they mean for my career. It costs $0, and I never have to touch it.</p>
+      <p>This page has two parts. The first is how I built it and what I learned by treating it like a product. The second is a step-by-step guide with my exact prompts, so you can build one for your own field.</p>
+      <ul class="po-toc">
+        <li><a href="#story">Part 1: How I built it</a></li>
+        <li><a href="#guide">Part 2: Build your own</a></li>
+        <li><a href="#prompts">The exact prompts</a></li>
+      </ul>
+
+      <h2 id="story"><span class="po-part">Part 1</span>How I built it</h2>
+
+      <h3>Why I built it</h3>
+      <p>&#8220;Did you see who just raised?&#8221; At every NYC event I walk into, from NeuroNYC happy hours to health tech meetups, that is how the conversation begins. Who got FDA clearance this week? Which wearable is facing backlash? Who is gaining traction, and who is quietly hiring?</p>
+      <p>In a field moving as fast as neurotech, staying on top of the industry is more vital than ever. Funding rounds close overnight, a single clearance can reshape a market, and the companies gaining traction this month are often the ones building their teams the next. Knowing what is new is how you earn your place in the conversation.</p>
+      <p>So I subscribed to 10 newsletters across medical devices, health tech and neurotech. Each one was excellent, and yet, realistically, I wasn&#8217;t getting through even one a week. The information was all there; I simply never had the time to sit down and read it.</p>
+      <p>What I did have was time with my ears free: my commute, my walks, my morning runs. And so I asked myself a product question. What if the news came to me, in a format designed for the time I actually had?</p>
+
+      <h3>Version one: an MVP I forgot in two minutes</h3>
+      <p>I treated the first version as an MVP, the smallest thing that could test the idea. With Claude, I built a pipeline that pulled the last day of news from a list of sources every morning. Gemini then wrote a conversation between two hosts and voiced it, and GitHub ran the whole thing on a schedule and published it as a podcast feed.</p>
+      <p>On my morning run, I pressed play. The hosts opened with a rundown of every headline, then raced through up to eight stories, one after another. Two minutes after it ended, I couldn&#8217;t recall a single one. The pipeline did exactly what I had built it to do, but as its user, I had gained nothing. That was my first real insight: my problem was never access to the news. It was retention.</p>
+
+      <h3>Designing for the ear</h3>
+      <p>Reading and listening are entirely different user experiences. When I read, I can skim, jump back and see the structure on the page. When I listen on a run, I get one pass, and the show itself has to tell me where I am. So I rewrote the product requirements around how I actually listen:</p>
+      <ul>
+        <li><strong>No headline dump.</strong> The intro is two lines and one sentence on what&#8217;s coming: &#8220;Five stories today: three in neurotech, two in health tech.&#8221;</li>
+        <li><strong>Numbered stories.</strong> &#8220;Story two of five.&#8221; If my mind wanders, I can find my place again.</li>
+        <li><strong>Named sections.</strong> Who expanded (funding, FDA, deals), new research and products, NYC watch, career signal, then the wrap-up.</li>
+        <li><strong>One story at a time,</strong> each ending on a clear one-line point.</li>
+        <li><strong>A recap at the end</strong> that goes back through every story in one sentence each. That recap is what makes it stick.</li>
+      </ul>
+
+      <h3>Crafting Nora and Theo</h3>
+      <p>Even with a clearer structure, something still felt off. The two hosts sounded like the same person reading alternate lines, and within minutes, my attention would drift. I realized that what keeps me listening to my favorite podcasts isn&#8217;t only the content; it&#8217;s the chemistry between the people talking.</p>
+      <p>So I designed two characters you could tell apart with your eyes closed. Nora is the anchor: quick, bright and curious. She speaks in short sentences, keeps the show moving, and asks the questions a smart listener would ask, like &#8220;Wait, how big is that?&#8221; Theo is the engineer: slower, thoughtful, with a dry sense of humor. He explains how the technology actually works and what it means in practice.</p>
+      <p>Each host has their own voice and their own speaking style. Nora sounds bright and energetic, while Theo is lower and more relaxed, with small pauses. I also asked for natural speech: contractions, quick reactions like &#8220;Huh&#8221; and &#8220;Okay, that&#8217;s big,&#8221; and never the same sentence pattern twice in a row. The first episode with Nora and Theo was the best one yet, because for the first time, it sounded like a conversation rather than a script.</p>
+
+      <h3>Iterating like a product manager</h3>
+      <p>From there, I ran the project the way I would run any product: in short build, measure, learn loops. Every morning, I was the user. I listened on my run, noted what landed and what didn&#8217;t, turned that feedback into one focused change, and shipped it before the next morning&#8217;s episode. My success metric was simple: after my run, could I explain the day&#8217;s news to someone else?</p>
+      <ul>
+        <li><strong>Cutting scope.</strong> Eight stories was too many to remember. Now it&#8217;s five: the three biggest neurotech stories and the two biggest across digital health, medtech and wearables. On an unusually slow or huge day, it can flex to four or six.</li>
+        <li><strong>Removing duplication.</strong> The same story kept showing up in two sections. Now each story appears exactly once, and stories covered in the last three days are skipped.</li>
+        <li><strong>Splitting one job into two.</strong> I separated the AI into an editor and a writer. The editor reads every news item, picks the stories, and logs everything it cut and why. The writer then turns that plan into the script. That log made the whole process transparent: I can see exactly what was considered, and why.</li>
+        <li><strong>Debugging with the logs.</strong> One day, the editor cut a story I cared about, a backlash over a well-known founder&#8217;s new wearable, labeling it an &#8220;influencer dispute&#8221; and a duplicate. The log showed me exactly why. So I taught the editor that several outlets covering one story is a signal it matters, and that controversies over the science behind devices are exactly what I want to hear about. The next episode covered it.</li>
+      </ul>
+
+      <h3>Tailoring it to my goals</h3>
+      <p>Once the core experience worked, I started building features that no newsletter could offer me, because no newsletter knows my goals:</p>
+      <ul>
+        <li><strong>Trends</strong> that cut across the day&#8217;s stories, so I hear the pattern and not only the headlines.</li>
+        <li><strong>Career Signal,</strong> which names the companies that look like they&#8217;re growing and what someone with my background in biosignal ML and neuromodulation could bring to each.</li>
+        <li><strong>NYC Watch,</strong> because I want to know what&#8217;s happening in my own city first.</li>
+        <li><strong>A daily list of companies</strong> that raised, expanded or got cleared, which I use to decide who to reach out to next.</li>
+      </ul>
+
+      <h3>What it does for me</h3>
+      <p>After the first episode in the new format, I could walk through four main stories from memory. XRHealth had acquired Living Brain, a German neurotech startup. Muse had confirmed that its users&#8217; brainwave recordings train its AI models. Medical experts were pushing back on the clinical claims behind Deepinder Goyal&#8217;s $1,000 Temple wearable. And researchers in China had held 94% mind-typing accuracy with a non-invasive BCI across a full day of use.</p>
+      <p>More importantly, I understood how they connected. Consumer biosignal devices are facing a reckoning over both credibility and privacy, while non-invasive interfaces are finally moving from short lab sessions to all-day, real-world use. And I knew what that meant for me: as someone building ML on EEG and other biosignals, validation and responsible data use aren&#8217;t side topics. They are becoming the job.</p>
+      <p>That is the difference between consuming news and understanding an industry. I no longer walk into a room hoping someone else brings up a topic I know. I walk in with a point of view.</p>
+
+      <h3>Where it is now</h3>
+      <p>Every morning around 5 AM, the pipeline pulls news from more than 20 sources, the editor picks the stories, the writer scripts Nora and Theo, and the episode is voiced and published to my feed, which Spotify picks up. Each episode comes with a full transcript and the editor&#8217;s log.</p>
+      <figure class="po-fig po-fig-phone"><img src="assets/neuro-morning-spotify.jpg" alt="Neuro Morning in Spotify, showing the episodes &#8220;Ethics Reckoning in Consumer EEG and All-Day Mind-Typing&#8221; and &#8220;Smart Rings Win Clearance and the Hidden Privacy Flaws in EEG&#8221;" width="860" height="1420" loading="lazy" decoding="async"><figcaption>Neuro Morning in my Spotify, ready before my morning run.</figcaption></figure>
+      <p>The stack is Claude to help me build it, Gemini to write and voice it, GitHub to run and host it, and Spotify to deliver it. Total cost: $0.</p>
+      <p>Everyone worries that AI is making us dumber. Building this taught me the opposite can be true, as long as we build with intention: AI didn&#8217;t think for me, it gave me back the time to think for myself. I would much rather use it to make me smarter.</p>
+
+      <h2 id="guide"><span class="po-part">Part 2</span>Build your own</h2>
+      <p>You don&#8217;t need to write code. You&#8217;ll copy my project, swap in your topics and prompts, and connect a few free accounts. Plan on about 30 minutes.</p>
+      <p><strong>You&#8217;ll need:</strong> a personal Google account (for a free Gemini key), a free GitHub account, and a podcast app.</p>
+
+      <h3>1. Copy the project</h3>
+      <p>Go to <a href="https://github.com/chandnisacheti/daily-neuro-podcast" target="_blank" rel="noopener">github.com/chandnisacheti/daily-neuro-podcast</a> and click <strong>Fork</strong>. Keep the repository public, because free GitHub Pages hosting needs a public repository. Then open the <strong>Actions</strong> tab of your copy and click the button to enable workflows, since GitHub turns them off on copies.</p>
+
+      <h3>2. Get a free Gemini key</h3>
+      <p>Go to <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> and click <strong>Create API key</strong>. Use a personal Gmail, because school and work accounts often block AI Studio. Treat the key like a password: don&#8217;t paste it into a chat or a file.</p>
+
+      <h3>3. Store the key in GitHub</h3>
+      <p>In your repository, go to <strong>Settings &#8594; Secrets and variables &#8594; Actions &#8594; New repository secret</strong>. Name it <code>GEMINI_API_KEY</code>, paste the key, and save. Only your workflow can read it.</p>
+
+      <h3>4. Make it yours</h3>
+      <p>You can edit every file right on GitHub by opening it and clicking the pencil icon.</p>
+      <ul>
+        <li><code>podcast/sources.py</code> is your news list. Each line is a feed. The easiest way to add a topic is a Google News search line, for example <code>google_news('"climate tech" (raises OR launches)')</code>. Delete the neurotech ones you don&#8217;t need.</li>
+        <li><code>podcast/make_episode.py</code> holds the prompts. Replace the editor and writer prompts with your versions of the ones <a href="#prompts">below</a>, and rename the hosts if you like.</li>
+        <li><code>podcast/feed.py</code> holds the show&#8217;s name and owner. Change the title, your name and your email.</li>
+      </ul>
+
+      <h3>5. Turn on hosting</h3>
+      <p>Go to <strong>Settings &#8594; Pages</strong>, choose <strong>Deploy from a branch</strong>, then pick <code>main</code> and the <code>/docs</code> folder. This is where your episodes and feed will live.</p>
+
+      <h3>6. Make your first episode</h3>
+      <p>Go to <strong>Actions &#8594; Daily episode &#8594; Run workflow</strong>. It takes about 10 to 15 minutes. When it turns green, your feed is at:</p>
+      <pre><code>https://YOUR-GITHUB-NAME.github.io/daily-neuro-podcast/feed.xml</code></pre>
+
+      <h3>7. Listen in your podcast app</h3>
+      <ul>
+        <li><strong>Apple Podcasts:</strong> Library &#8594; the &#8943; menu &#8594; Follow a Show by URL, then paste your feed.</li>
+        <li><strong>Spotify:</strong> go to <a href="https://creators.spotify.com" target="_blank" rel="noopener">creators.spotify.com</a>, choose to add an existing podcast, paste your feed, and enter the code Spotify emails to the address in <code>feed.py</code>. Spotify only lists public shows, so anyone could find it.</li>
+      </ul>
+
+      <h3>8. Pick your time</h3>
+      <p>The schedule lives in <code>.github/workflows/daily.yml</code> and uses UTC time. <code>17 9 * * *</code> means 9:17 UTC, which is 4:17 AM in New York in winter. GitHub sometimes runs scheduled jobs late or skips them at busy times, so the project uses an odd minute plus a backup slot that only runs if the first one didn&#8217;t.</p>
+
+      <h3>Good to know</h3>
+      <ul>
+        <li><strong>Test sparingly.</strong> Gemini&#8217;s free voices have a daily limit. About six test episodes in one day used mine up. If the limit hits, the project re-voices the episode with free Microsoft Edge voices so you still get a show.</li>
+        <li><strong>Some sites block automated readers.</strong> If a source keeps showing up as skipped in the run log, replace it with a Google News search for the same outlet.</li>
+        <li><strong>Read the editor&#8217;s log.</strong> Each run saves one in <code>docs/logs/</code>. When the show misses a story you wanted, the log tells you why, and that tells you what to change in the prompt.</li>
+        <li><strong>Try the prompts first.</strong> Before building anything, paste a few headlines into the Gemini app with the editor prompt, then give it the writer prompt. You&#8217;ll hear the format in five minutes.</li>
+      </ul>
+
+      <h2 id="prompts"><span class="po-part">The prompts</span>Exactly what I use</h2>
+      <p>These are the prompts that run my show, with my details swapped for placeholders in [brackets]. Fill those in, and keep <code>{recent}</code>, <code>{items}</code>, <code>{plan}</code> and <code>{date}</code> as they are, because the code fills them in each morning.</p>
+      <p>One detail if you paste these into <code>make_episode.py</code>: double every curly brace in the JSON example, writing <code>{{</code> and <code>}}</code>, but leave the four placeholders above single.</p>
+
+      <h3>The editor</h3>
+      <p>The editor reads every news item and decides what makes the show. Most of your personalization goes here.</p>
+      <div class="po-code">
+        <button class="copy po-copy" type="button" data-copy-prompt>Copy</button>
+<pre><code>You are the editor of "[SHOW NAME]", a daily ~10 minute audio news briefing for [YOUR NAME], [ONE LINE ABOUT YOU: what you do, what you work on, and where you want your career to go].
+
+Pick the stories for today's episode from the numbered news items, and plan the rundown.
+
+Selection rules:
+- FIVE main stories by default: the THREE biggest stories in [YOUR CORE TOPIC] and the TWO biggest stories from [YOUR ADJACENT TOPICS]. Go to 4 or 6 only if the day is unusually thin or something huge happened; never more than 6. Pick substantive stories with real depth, because each one gets a full segment.
+- Prefer: funding, acquisitions, regulatory decisions, notable research, product launches, [YOUR CITY] companies, and anything that signals hiring or growth.
+- When several outlets cover the same story, that is a SIGNAL it matters: merge them into one story (use the best item's id; list the others in skipped as "merged into story N"). Never drop a story just because it has duplicates.
+- [YOUR NAME] especially wants: [THE KINDS OF STORIES YOU NEVER WANT TO MISS]. Treat these as strong picks.
+- Skip: items not about [YOUR FIELD], thin press releases, shopping guides and generic product reviews, and stories already covered in recent episodes (listed below) unless there is a genuinely new development.
+- Each story appears ONCE in the whole episode. Never assign the same story to two sections.
+- Choose stories that connect to each other where possible, so the Trends segment has something real to tie together.
+
+Sections are flexible. Default order: "Who Expanded" (funding, deals, approvals, growth), "New Research and Products", "[YOUR CITY] Watch", "Trends", "Career Signal", "Recap". Drop a section if it would only repeat earlier stories. Rename or reorder sections when that makes the day clearer. Trends, Career Signal and Recap tie together stories already told and must not introduce repeats as new stories.
+
+Recently covered stories (do not repeat): {recent}
+
+Return JSON:
+{"title": "short episode title",
+  "sections": [{"name": "...", "stories": [{"id": 3, "angle": "one line: what to emphasize and why it matters to [YOUR NAME]"}]}],
+  "trends": ["2 to 3 trends, each naming which of today's stories (by id) show it and what it means for the field"],
+  "career_signal": "3 to 4 concrete lines: which companies or areas look like they are growing or hiring, and the specific role or pitch [YOUR NAME] could make to each",
+  "recap": ["exactly one memorable line per main story, in the order they were told"],
+  "skipped": [{"id": 7, "reason": "short reason"}]}
+Every item id must appear exactly once, either in a section or in skipped.
+
+NEWS ITEMS (JSON):
+{items}</code></pre>
+      </div>
+
+      <h3>The writer</h3>
+      <p>The writer turns the editor&#8217;s plan into a conversation. This is where Nora and Theo come from, and where the show becomes easy to follow by ear.</p>
+      <div class="po-code">
+        <button class="copy po-copy" type="button" data-copy-prompt>Copy</button>
+<pre><code>Write the script for today's "[SHOW NAME]" from the editor's plan below.
+Today is {date}. Listener: [YOUR NAME] (see plan). They listen while walking or commuting.
+
+HOSTS (distinct people, distinct ways of talking):
+- Nora: the anchor. Quick, bright, curious. Short punchy sentences, asks the questions a smart listener would ask ("Wait, how big is that?"), moves the show along, announces sections.
+- Theo: the engineer-analyst. Slower, thoughtful, a little dry humor. Explains the mechanism or the "so what" in plain words, often starts with "Here's the thing" or "So, practically..." (vary it).
+They trade off who introduces stories. Natural speech: contractions, varied sentence length, quick reactions ("Huh.", "Right.", "Okay, that's big."), occasional friendly back-and-forth. Never robotic, never the same sentence pattern twice in a row. Do not say "This matters because" or "The takeaway" every time; vary how you land each story, but every story should end with a clear one-line point.
+
+EASY TO FOLLOW BY EAR:
+- Intro: two short lines (hello, the date), plus one line saying how many stories are coming ("Five stories today: three in [CORE TOPIC], two in [ADJACENT TOPICS]"). No list of headlines up front.
+- Number the stories as you go ("Story two of five"), so the listener always knows where they are.
+- Announce each section clearly by name, e.g. "Okay, first up: who expanded this week." Signal transitions ("That's the deals. Now, research.").
+- One story at a time: who, what happened, why it matters. Spell numbers the way people say them.
+- Follow the plan's sections and order exactly; each story is told once.
+- Give each main story a full segment (about 150 to 200 words): what happened, how it works, why it matters, and a clear one-line point at the end.
+- The closing segments are what make the episode memorable, so make them strong (about 350 words total):
+  * Trends: two or three patterns that cut ACROSS today's stories. For each, name the stories that show it, then what it means for where the field is heading.
+  * Career Signal: concrete and specific. Which companies or areas are growing, and for each one, what role or pitch someone with [YOUR BACKGROUND] could bring them.
+  * Recap: go back through every main story in order, one memorable sentence each ("One: ... Two: ..."), then one sentence that ties the whole day together.
+- Use only facts present in the items. Do not invent numbers, names or quotes.
+- About 1,500 to 1,700 words.
+
+Output ONLY dialogue lines, each starting with "Nora:" or "Theo:". No stage directions, no markdown.
+
+EDITOR'S PLAN (JSON):
+{plan}
+
+ITEMS USED (JSON):
+{items}</code></pre>
+      </div>
+
+      <h3>The voices</h3>
+      <p>Gemini&#8217;s text-to-speech takes a voice and a short style note for each speaker. These are mine, and they sit near the top of <code>make_episode.py</code>.</p>
+      <div class="po-code">
+        <button class="copy po-copy" type="button" data-copy-prompt>Copy</button>
+<pre><code>Nora (voice: Aoede): bright, quick, curious morning-show host; smiles while talking; energetic but clear
+Theo (voice: Charon): relaxed, lower-pitched, thoughtful engineer; slower cadence, small pauses, dry humor</code></pre>
+      </div>
+
+      <p>If you build one, I&#8217;d love to hear what your show covers. <a href="index.html#book">Book a chat</a> or message me on <a href="https://www.linkedin.com/in/chandnisacheti/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+    </div>
+  </article>
+  <nav class="po-more" aria-label="More stories">
+    <p class="label">More stories</p>
+    <div class="po-more-grid">
+      <a class="po-next" href="under-the-door.html"><span class="st-kicker">How I got into neurotech</span><span class="po-next-t">Under the door</span></a>
+      <a class="po-next" href="third-door.html"><span class="st-kicker">Rooms I found my way into</span><span class="po-next-t">Finding the third door</span></a>
+    </div>
+  </nav>
+</main>
+
+<footer class="sp-foot"><a href="index.html">&#8592; Back to chandnisacheti.com</a></footer>
+<script src="main.js?v=4" defer></script>
+<script>
+  document.querySelectorAll('[data-copy-prompt]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.parentNode.querySelector('code').textContent;
+      var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1800); };
+      if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done, function () {}); }
+    });
+  });
+</script>
+</body>
+</html>
