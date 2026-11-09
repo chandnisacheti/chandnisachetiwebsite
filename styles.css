@@ -752,3 +752,5 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .po-fig-phone { margin: 2rem auto 2.4rem; max-width: 22rem; }
 .po-fig-phone img { aspect-ratio: auto; height: auto; object-fit: contain; border-radius: 14px; border: 1px solid var(--line); }
 .po-fig-phone figcaption { margin-top: .8rem; font-size: .85rem; color: var(--cream-2); text-align: center; }
+.st-card-wide { grid-column: 1 / -1; min-height: 11rem; }
+.st-card-wide .st-dek { max-width: 40rem; }
