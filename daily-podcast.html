@@ -48,8 +48,8 @@
     <p class="st-kicker">Build log &amp; guide</p>
     <h1 class="po-h">I built my own morning podcast</h1>
     <div class="po-body">
-      <p class="po-lede">Every morning at 5 AM, a 10-minute show about the day&#8217;s neurotech and health tech news lands in my Spotify. Two AI hosts walk me through the five stories that matter most to me, the trends that connect them, and which companies are growing. It costs $0, and it runs without me touching anything.</p>
-      <p>This page has two parts. First, how I built it and what I learned by treating it like a product. Second, a step-by-step guide with the exact prompts, so you can build one for your own field.</p>
+      <p class="po-lede">Every morning at 5 AM, a 10-minute show on the day&#8217;s neurotech and health tech news is waiting in my Spotify. Before my run is over, two AI hosts have walked me through the five stories that matter most to me, the trends connecting them, and what they mean for my career. It costs $0, and I never have to touch it.</p>
+      <p>This page has two parts. The first is how I built it and what I learned by treating it like a product. The second is a step-by-step guide with my exact prompts, so you can build one for your own field.</p>
       <ul class="po-toc">
         <li><a href="#story">Part 1: How I built it</a></li>
         <li><a href="#guide">Part 2: Build your own</a></li>
@@ -59,41 +59,41 @@
       <h2 id="story"><span class="po-part">Part 1</span>How I built it</h2>
 
       <h3>Why I built it</h3>
-      <p>At every NYC event I go to, from NeuroNYC happy hours to health tech meetups, the conversation comes back to the same questions. Who just raised? Who got FDA clearance? Which wearable is getting backlash? Where is the field heading?</p>
-      <p>In neurotech, those answers change every day. So I subscribed to 10 newsletters across medical devices, health tech and neurotech. They were all excellent. Realistically, I wasn&#8217;t getting through even one a week.</p>
-      <p>What I did have was time with my ears free: commuting, walking and running. So I decided to build something that reads the news for me and turns it into a show I&#8217;d actually listen to.</p>
+      <p>&#8220;Did you see who just raised?&#8221; At every NYC event I walk into, from NeuroNYC happy hours to health tech meetups, that is how the conversation begins. Who got FDA clearance this week? Which wearable is facing backlash? Who is gaining traction, and who is quietly hiring?</p>
+      <p>In a field moving as fast as neurotech, staying on top of the industry is more vital than ever. Funding rounds close overnight, a single clearance can reshape a market, and the companies gaining traction this month are often the ones building their teams the next. Knowing what is new is how you earn your place in the conversation.</p>
+      <p>So I subscribed to 10 newsletters across medical devices, health tech and neurotech. Each one was excellent, and yet, realistically, I wasn&#8217;t getting through even one a week. The information was all there; I simply never had the time to sit down and read it.</p>
+      <p>What I did have was time with my ears free: my commute, my walks, my morning runs. And so I asked myself a product question. What if the news came to me, in a format designed for the time I actually had?</p>
 
-      <h3>Version one: a news dump I forgot in two minutes</h3>
-      <p>I built the first version with Claude. Every morning, a script pulled the last day of news from a list of sources, Gemini wrote a two-host conversation about the top stories, and Gemini&#8217;s text-to-speech voiced it. GitHub ran it on a schedule and published it as a podcast feed.</p>
-      <p>It worked, and it was bad. It crammed in up to eight stories and opened with a rundown of every headline before it got to any of them. I listened on a walk, and two minutes after it ended I couldn&#8217;t tell you a single thing I&#8217;d heard. The news wasn&#8217;t the problem. The format was.</p>
+      <h3>Version one: an MVP I forgot in two minutes</h3>
+      <p>I treated the first version as an MVP, the smallest thing that could test the idea. With Claude, I built a pipeline that pulled the last day of news from a list of sources every morning. Gemini then wrote a conversation between two hosts and voiced it, and GitHub ran the whole thing on a schedule and published it as a podcast feed.</p>
+      <p>On my morning run, I pressed play. The hosts opened with a rundown of every headline, then raced through up to eight stories, one after another. Two minutes after it ended, I couldn&#8217;t recall a single one. The pipeline did exactly what I had built it to do, but as its user, I had gained nothing. That was my first real insight: my problem was never access to the news. It was retention.</p>
 
-      <h3>Making it work by ear</h3>
-      <p>Reading and listening are different. When you read, you can skim, jump back, and see the structure. When you listen while doing something else, you get one pass, and you need the show to tell you where you are.</p>
-      <p>So I rebuilt the structure around how I actually listen:</p>
+      <h3>Designing for the ear</h3>
+      <p>Reading and listening are entirely different user experiences. When I read, I can skim, jump back and see the structure on the page. When I listen on a run, I get one pass, and the show itself has to tell me where I am. So I rewrote the product requirements around how I actually listen:</p>
       <ul>
         <li><strong>No headline dump.</strong> The intro is two lines and one sentence on what&#8217;s coming: &#8220;Five stories today: three in neurotech, two in health tech.&#8221;</li>
         <li><strong>Numbered stories.</strong> &#8220;Story two of five.&#8221; If my mind wanders, I can find my place again.</li>
-        <li><strong>Named sections.</strong> Who expanded (funding, FDA, deals), new research and products, NYC watch, then the wrap-up.</li>
+        <li><strong>Named sections.</strong> Who expanded (funding, FDA, deals), new research and products, NYC watch, career signal, then the wrap-up.</li>
         <li><strong>One story at a time,</strong> each ending on a clear one-line point.</li>
         <li><strong>A recap at the end</strong> that goes back through every story in one sentence each. That recap is what makes it stick.</li>
       </ul>
 
       <h3>Crafting Nora and Theo</h3>
-      <p>The first two hosts sounded like the same person reading alternate lines. It felt like listening to a script, not a conversation, and my attention drifted.</p>
-      <p>So I designed two characters you could tell apart with your eyes closed. Nora is the anchor: quick, bright and curious. She speaks in short sentences, moves the show along, and asks the questions a smart listener would ask, like &#8220;Wait, how big is that?&#8221; Theo is the engineer: slower, thoughtful, with a dry sense of humor. He explains how the technology actually works and what it means in practice.</p>
-      <p>Each host gets their own voice and their own speaking style. Nora is voiced to sound bright and energetic, and Theo is lower and more relaxed, with small pauses. I also told the writer to use natural speech: contractions, quick reactions like &#8220;Huh&#8221; and &#8220;Okay, that&#8217;s big,&#8221; and never the same sentence pattern twice in a row. The first episode with Nora and Theo was the best one yet.</p>
+      <p>Even with a clearer structure, something still felt off. The two hosts sounded like the same person reading alternate lines, and within minutes, my attention would drift. I realized that what keeps me listening to my favorite podcasts isn&#8217;t only the content; it&#8217;s the chemistry between the people talking.</p>
+      <p>So I designed two characters you could tell apart with your eyes closed. Nora is the anchor: quick, bright and curious. She speaks in short sentences, keeps the show moving, and asks the questions a smart listener would ask, like &#8220;Wait, how big is that?&#8221; Theo is the engineer: slower, thoughtful, with a dry sense of humor. He explains how the technology actually works and what it means in practice.</p>
+      <p>Each host has their own voice and their own speaking style. Nora sounds bright and energetic, while Theo is lower and more relaxed, with small pauses. I also asked for natural speech: contractions, quick reactions like &#8220;Huh&#8221; and &#8220;Okay, that&#8217;s big,&#8221; and never the same sentence pattern twice in a row. The first episode with Nora and Theo was the best one yet, because for the first time, it sounded like a conversation rather than a script.</p>
 
-      <h3>Iterating like a product</h3>
-      <p>For the next few days I treated each episode like a product release. I listened on my morning walk, wrote down what worked and what didn&#8217;t, and changed one thing at a time. A few of the changes that made the biggest difference:</p>
+      <h3>Iterating like a product manager</h3>
+      <p>From there, I ran the project the way I would run any product: in short build, measure, learn loops. Every morning, I was the user. I listened on my run, noted what landed and what didn&#8217;t, turned that feedback into one focused change, and shipped it before the next morning&#8217;s episode. My success metric was simple: after my run, could I explain the day&#8217;s news to someone else?</p>
       <ul>
-        <li><strong>Fewer, deeper stories.</strong> Eight stories was too many to remember. Now it&#8217;s five: the three biggest neurotech stories and the two biggest across digital health, medtech and wearables. On a slow or huge day it can flex to four or six.</li>
-        <li><strong>No repeats.</strong> The same story kept showing up in two sections. Now each story appears exactly once, and stories already covered in the last three days are skipped.</li>
-        <li><strong>An editor, then a writer.</strong> I split the AI into two steps. An editor reads every news item, picks the stories, and writes a log of everything it cut and why. Then a writer turns that plan into the script. That log made the whole thing transparent: I can see exactly what was considered.</li>
-        <li><strong>Teaching the editor my taste.</strong> One day the editor cut a story I cared about, a backlash over a well-known founder&#8217;s new wearable, calling it an &#8220;influencer dispute&#8221; and a duplicate. The log showed me why. So I taught it that several outlets covering the same story is a signal it matters, and that controversies over the science behind devices are exactly what I want to hear about. The next episode covered it.</li>
+        <li><strong>Cutting scope.</strong> Eight stories was too many to remember. Now it&#8217;s five: the three biggest neurotech stories and the two biggest across digital health, medtech and wearables. On an unusually slow or huge day, it can flex to four or six.</li>
+        <li><strong>Removing duplication.</strong> The same story kept showing up in two sections. Now each story appears exactly once, and stories covered in the last three days are skipped.</li>
+        <li><strong>Splitting one job into two.</strong> I separated the AI into an editor and a writer. The editor reads every news item, picks the stories, and logs everything it cut and why. The writer then turns that plan into the script. That log made the whole process transparent: I can see exactly what was considered, and why.</li>
+        <li><strong>Debugging with the logs.</strong> One day, the editor cut a story I cared about, a backlash over a well-known founder&#8217;s new wearable, labeling it an &#8220;influencer dispute&#8221; and a duplicate. The log showed me exactly why. So I taught the editor that several outlets covering one story is a signal it matters, and that controversies over the science behind devices are exactly what I want to hear about. The next episode covered it.</li>
       </ul>
 
-      <h3>Making it mine</h3>
-      <p>Once the format worked, I added the segments that make it useful for my life specifically:</p>
+      <h3>Tailoring it to my goals</h3>
+      <p>Once the core experience worked, I started building features that no newsletter could offer me, because no newsletter knows my goals:</p>
       <ul>
         <li><strong>Trends</strong> that cut across the day&#8217;s stories, so I hear the pattern and not only the headlines.</li>
         <li><strong>Career Signal,</strong> which names the companies that look like they&#8217;re growing and what someone with my background in biosignal ML and neuromodulation could bring to each.</li>
@@ -101,10 +101,15 @@
         <li><strong>A daily list of companies</strong> that raised, expanded or got cleared, which I use to decide who to reach out to next.</li>
       </ul>
 
+      <h3>What it does for me</h3>
+      <p>After the first episode in the new format, I could walk through four main stories from memory. XRHealth had acquired Living Brain, a German neurotech startup. Muse had confirmed that its users&#8217; brainwave recordings train its AI models. Medical experts were pushing back on the clinical claims behind Deepinder Goyal&#8217;s $1,000 Temple wearable. And researchers in China had held 94% mind-typing accuracy with a non-invasive BCI across a full day of use.</p>
+      <p>More importantly, I understood how they connected. Consumer biosignal devices are facing a reckoning over both credibility and privacy, while non-invasive interfaces are finally moving from short lab sessions to all-day, real-world use. And I knew what that meant for me: as someone building ML on EEG and other biosignals, validation and responsible data use aren&#8217;t side topics. They are becoming the job.</p>
+      <p>That is the difference between consuming news and understanding an industry. I no longer walk into a room hoping someone else brings up a topic I know. I walk in with a point of view.</p>
+
       <h3>Where it is now</h3>
       <p>Every morning around 5 AM, the pipeline pulls news from more than 20 sources, the editor picks the stories, the writer scripts Nora and Theo, and the episode is voiced and published to my feed, which Spotify picks up. Each episode comes with a full transcript and the editor&#8217;s log.</p>
       <p>The stack is Claude to help me build it, Gemini to write and voice it, GitHub to run and host it, and Spotify to deliver it. Total cost: $0.</p>
-      <p>Now I start each day knowing the funding rounds, FDA decisions and research worth talking about, and I walk into rooms with something to say. Everyone worries AI is making us dumber. I&#8217;d rather use it to make me smarter.</p>
+      <p>Everyone worries that AI is making us dumber. Building this taught me the opposite can be true, as long as we build with intention: AI didn&#8217;t think for me, it gave me back the time to think for myself. I would much rather use it to make me smarter.</p>
 
       <h2 id="guide"><span class="po-part">Part 2</span>Build your own</h2>
       <p>You don&#8217;t need to write code. You&#8217;ll copy my project, swap in your topics and prompts, and connect a few free accounts. Plan on about 30 minutes.</p>
