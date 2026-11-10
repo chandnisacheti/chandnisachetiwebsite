@@ -795,8 +795,7 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .st-teaser:has(+ .nm:not([hidden])) { padding-bottom: 0; }
 .nm { padding-bottom: clamp(3rem, 6vw, 5rem); }
 
-/* ==========================================================
-   Design round 1 (2026-11-09): tactile, biosignal, editorial
+/* ===================================================   Design round 1 (2026-11-09): tactile, biosignal, editorial
    ========================================================== */
 /* film grain so the flat green feels printed, not rendered */
 body::after { content: ""; position: fixed; inset: -50%; z-index: 60; pointer-events: none; opacity: .09; mix-blend-mode: overlay;
@@ -825,3 +824,7 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 60; pointer-ev
 
 @media (prefers-reduced-motion: reduce) { .sig-dot { animation: none; } .st-card, .bi-card, .nm-card, .po-next { transition: none; } }
 .pillar-head .sig { flex: 1 0 100%; }
+=======
+/* v129 three.js shader background */
+.bg-shader { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; display: block; }
+.has-shader .glow { display: none; }
