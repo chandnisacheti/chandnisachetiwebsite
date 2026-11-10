@@ -149,7 +149,7 @@ if (renderer) {
       if (btn.dataset.busy) return;
       btn.dataset.busy = '1';
       try {
-        const mod = await import('./hand.js?v=1');
+        const mod = await import('./hand.js?v=2');
         await mod.toggle(btn);
       } catch (e) {
         btn.innerHTML = 'Camera unavailable';

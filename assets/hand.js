@@ -9,8 +9,14 @@ async function start(btn) {
   btn.innerHTML = 'Loading hand tracking&#8230;';
   if (!landmarker) {
     const fileset = await FilesetResolver.forVisionTasks(base + 'wasm');
+    let model = null;
+    for (const url of [base + 'hand_landmarker.task', base + 'hand_landmarker.task.wasm',
+      'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task']) {
+      try { const r = await fetch(url); if (r.ok) { model = new Uint8Array(await r.arrayBuffer()); break; } } catch (e) {}
+    }
+    if (!model) throw new Error('hand model unavailable');
     landmarker = await HandLandmarker.createFromOptions(fileset, {
-      baseOptions: { modelAssetPath: base + 'hand_landmarker.task', delegate: 'GPU' },
+      baseOptions: { modelAssetBuffer: model, delegate: 'GPU' },
       runningMode: 'VIDEO', numHands: 1
     });
   }
