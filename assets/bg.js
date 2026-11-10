@@ -45,10 +45,10 @@ if (renderer) {
       void main(){
         vec2 uv = gl_FragCoord.xy / uRes;
         float asp = uRes.x / uRes.y;
-        vec2 sc = vec2(asp, 1.0) * 2.2;
+        vec2 sc = vec2(asp, 1.0) * 1.7;
         vec2 p = uv * sc; p.y -= uScroll * 0.35;
         vec2 m = uMouse * sc; m.y -= uScroll * 0.35;
-        float t = uTime * 0.035;
+        float t = uTime * 0.022;
         float d = length(p - m);
 
         vec2 q = vec2(fbm(p + t), fbm(p + vec2(5.2, 1.3) - t));
@@ -60,17 +60,17 @@ if (renderer) {
         vec3 base = vec3(0.145, 0.235, 0.200);
         vec3 teal = vec3(0.32, 0.58, 0.50);
         vec3 col = mix(deep, base, smoothstep(0.25, 0.75, f));
-        col = mix(col, teal, 0.27 * smoothstep(0.55, 0.95, f) * length(q));
+        col = mix(col, teal, 0.2 * smoothstep(0.55, 0.95, f) * length(q));
 
         float ridge = 1.0 - abs(2.0 * fbm(p*1.3 + 2.0*r - t) - 1.0);
-        col += teal * 0.09 * pow(ridge, 10.0);
+        col += teal * 0.06 * pow(ridge, 10.0);
 
-        col += teal * 0.20 * exp(-d*d*1.1);
+        col += teal * 0.15 * exp(-d*d*1.1);
 
         vec2 c = uClick * sc; c.y -= uScroll * 0.35;
         float age = uTime - uClickT;
         float ring = exp(-pow(length(p - c) - age*1.1, 2.0) * 30.0) * exp(-age * 1.6);
-        col += teal * 0.35 * ring * (0.6 + 0.4*ridge);
+        col += teal * 0.25 * ring * (0.6 + 0.4*ridge);
 
         col *= 0.88 + 0.12 * smoothstep(1.2, 0.2, length(uv - 0.5));
         col += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5) * 0.012;
@@ -100,7 +100,7 @@ if (renderer) {
   function frame() {
     if (!running) return;
     uniforms.uTime.value += Math.min(clock.getDelta(), 0.05);
-    uniforms.uMouse.value.lerp(target, 0.06);
+    uniforms.uMouse.value.lerp(target, 0.04);
     uniforms.uScroll.value = scrollY / innerHeight;
     renderer.render(scene, camera);
     requestAnimationFrame(frame);
