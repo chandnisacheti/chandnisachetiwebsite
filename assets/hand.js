@@ -23,7 +23,7 @@ async function start(btn) {
   stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: 'user' }, audio: false });
   panel = document.createElement('div');
   panel.className = 'hand-panel';
-  panel.innerHTML = '<div class="hand-cam"><video playsinline muted></video><canvas></canvas></div><p>Swipe your hand up to scroll down, down to scroll up. Point at a link for 2 seconds to click it.</p>';
+  panel.innerHTML = '<div class="hand-cam"><video playsinline muted></video><canvas></canvas></div><p>Swipe your hand up to scroll down, down to scroll up. Lower it again to reset. Point at a link for 3.5 seconds to click it.</p>';
   document.body.appendChild(panel);
   cursor = document.createElement('div');
   cursor.className = 'hand-cursor lost';
@@ -58,11 +58,11 @@ function stop(btn, keep) {
 // Two moves only:
 //  swipe your hand up and the page scrolls down (and the other way), like a phone.
 //    Slow movements are ignored, so you can bring your hand back without scrolling.
-//  point at a link or button and hold still for 2 seconds to click it.
+//  point at a link or button and hold still for 3.5 seconds to click it.
 let lastT = -1, vel = 0, carry = 0, seen = 0, lastFrame = 0, prevY = null, cursor = null, hoverEl = null;
-let tx = 0, ty = 0, sx = 0, sy = 0, dwellEl = null, dwellStart = 0, cooldown = 0;
+let tx = 0, ty = 0, sx = 0, sy = 0, dwellEl = null, dwellStart = 0, cooldown = 0, lockDir = 0, lockUntil = 0;
 const REACH = 0.7;                       // central 70% of the camera covers the whole screen
-const DWELL = 2000;
+const DWELL = 3500;
 const SWIPE = 0.9;                       // hand speed (camera heights per second) that counts as a swipe
 const toScreen = v => Math.min(1, Math.max(0, (v - (1 - REACH) / 2) / REACH));
 const clickable = el => el && !el.closest('.hand-btn, .hand-panel') ? el.closest('a, button, [role="button"], summary') : null;
@@ -128,9 +128,17 @@ function loop(now) {
     const frameDt = Math.max(16, t - seen) / 1000;
     const hv = (py - prevY) / frameDt;                         // camera heights per second, up is negative
     if (Math.abs(hv) > SWIPE) {
-      const v = -hv * innerHeight * 1.6;                       // hand up -> page down
-      vel += (v - vel) * 0.5;
+      const dir = Math.sign(hv);
       dwellStart = t;                                          // moving fast never clicks
+      if (lockDir && dir === -lockDir && t < lockUntil) {
+        // this is the hand coming back to reset after a swipe: ignore it,
+        // and keep ignoring while the return stroke continues
+        lockUntil = t + 700;
+      } else {
+        const v = -hv * innerHeight * 1.6;                     // hand up -> page down
+        vel += (v - vel) * 0.5;
+        lockDir = dir; lockUntil = t + 1500;                   // opposite moves in the next 1.5s are resets
+      }
     }
   }
   prevY = py; seen = t;
