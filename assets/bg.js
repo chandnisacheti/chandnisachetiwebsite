@@ -114,7 +114,7 @@ if (renderer) {
       if (btn.dataset.busy) return;
       btn.dataset.busy = '1';
       try {
-        const mod = await import('./hand.js?v=3');
+        const mod = await import('./hand.js?v=5');
         await mod.toggle(btn);
       } catch (e) {
         btn.querySelector('.hand-label').textContent = 'Camera unavailable';
@@ -122,6 +122,10 @@ if (renderer) {
       }
       delete btn.dataset.busy;
     });
+    // keep hand control on when a hand-click opens another page
+    let resume = false;
+    try { resume = sessionStorage.getItem('handOn') === '1'; } catch (e) {}
+    if (resume) btn.click();
   }
 
   const clock = new THREE.Clock();
