@@ -43,14 +43,6 @@ if (renderer) {
         for (int i = 0; i < 5; i++){ v += a*noise(p); p = m*p; a *= 0.5; }
         return v;
       }
-      vec2 nodePos(vec2 c){
-        vec2 h = vec2(hash(c), hash(c + 17.3));
-        return c + 0.5 + 0.32 * sin(6.2831 * h + uTime * 0.12 * (0.6 + h.yx));
-      }
-      float cortexH(vec2 bp, float t){
-        float g = noise(bp * 1.3 + t * 0.6) + 0.5 * noise(bp * 2.6 - t * 0.4);
-        return sqrt(abs(sin(g * 19.0)));
-      }
       void main(){
         vec2 uv = gl_FragCoord.xy / uRes;
         float asp = uRes.x / uRes.y;
@@ -80,37 +72,6 @@ if (renderer) {
         float age = uTime - uClickT;
         float ring = exp(-pow(length(p - c) - age*1.1, 2.0) * 30.0) * exp(-age * 1.6);
         col += teal * 0.25 * ring * (0.6 + 0.4*ridge);
-
-        // cortex: rounded gyri split by sulci, lit like a surface, drifting slowly
-        vec2 bp = p * 1.7 + 0.15 * r;
-        float folds = cortexH(bp, t);
-        float e = 0.012;
-        vec2 grad = vec2(cortexH(bp + vec2(e, 0.0), t) - folds, cortexH(bp + vec2(0.0, e), t) - folds) / e;
-        vec3 nrm = normalize(vec3(-grad * 0.035, 1.0));
-        float light = dot(nrm, normalize(vec3(-0.5, 0.6, 0.65)));
-        float gyri = folds;
-        col *= mix(0.72, 1.0, smoothstep(0.0, 0.55, folds));
-        col *= 0.86 + 0.22 * light;
-        col += teal * 0.05 * gyri * (0.5 + f);
-        // slow alpha-like wave of activity sweeping across the folds
-        float wave = 0.5 + 0.5 * sin(dot(p, vec2(0.8, 0.6)) * 1.6 - uTime * (0.5 + uEnergy));
-        col += teal * 0.05 * wave * gyri;
-
-        // neurons: soft cells that fire now and then (no connecting lines)
-        vec2 np = p * 1.25 + vec2(7.0, 3.0);
-        vec2 mn = m * 1.25 + vec2(7.0, 3.0);
-        vec2 cell = floor(np);
-        float fire = 0.0;
-        for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
-          vec2 c = cell + vec2(float(i), float(j));
-          vec2 da = np - nodePos(c);
-          float rate = 0.12 * (0.5 + hash(c + 5.3)) * (1.0 + 2.0 * uEnergy);
-          float ph = fract(uTime * rate + hash(c - 2.1));
-          float pulse = exp(-ph * 9.0);
-          fire += (0.15 + pulse) * exp(-dot(da, da) * 45.0);
-        }
-        float near = exp(-dot(np - mn, np - mn) * 0.9);
-        col += vec3(0.62, 0.88, 0.80) * 0.09 * fire * (0.5 + 1.2 * near + 0.8 * uEnergy);
 
         col *= 0.88 + 0.12 * smoothstep(1.2, 0.2, length(uv - 0.5));
         col += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5) * 0.012;
