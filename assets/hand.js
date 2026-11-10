@@ -6,7 +6,7 @@ let landmarker, stream, video, panel, dots, raf = 0, on = false, pinched = false
 const base = new URL('./vendor/mediapipe/', import.meta.url).href;
 
 async function start(btn) {
-  btn.innerHTML = 'Loading hand tracking&#8230;';
+  btn.querySelector('.hand-label').textContent = 'Loading…';
   if (!landmarker) {
     const fileset = await FilesetResolver.forVisionTasks(base + 'wasm');
     let model = null;
@@ -23,7 +23,7 @@ async function start(btn) {
   stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: 'user' }, audio: false });
   panel = document.createElement('div');
   panel.className = 'hand-panel';
-  panel.innerHTML = '<video playsinline muted></video><canvas></canvas><p>Move your palm. Pinch to send a pulse.</p>';
+  panel.innerHTML = '<div class="hand-cam"><video playsinline muted></video><canvas></canvas><span class="hand-zone" aria-hidden="true"></span></div><p>Raise your hand to scroll up, lower it to scroll down. Hold it in the middle to stop and read.</p>';
   document.body.appendChild(panel);
   video = panel.querySelector('video');
   dots = panel.querySelector('canvas');
@@ -31,7 +31,7 @@ async function start(btn) {
   await video.play();
   on = true;
   window.__bg && window.__bg.setHand(true);
-  btn.innerHTML = '<span aria-hidden="true">&#9995;</span> Stop hand control';
+  btn.querySelector('.hand-label').textContent = 'Stop hand control';
   btn.setAttribute('aria-pressed', 'true');
   loop();
 }
@@ -43,14 +43,20 @@ function stop(btn) {
   if (panel) panel.remove();
   stream = panel = video = null;
   window.__bg && window.__bg.setHand(false);
-  btn.innerHTML = '<span aria-hidden="true">&#9995;</span> Move it with your hand';
+  btn.querySelector('.hand-label').textContent = 'Scroll with your hand';
   btn.setAttribute('aria-pressed', 'false');
 }
 
-let lastT = -1;
-function loop() {
+let lastT = -1, vel = 0, carry = 0, seen = 0, lastFrame = 0;
+function loop(now) {
   if (!on) return;
   raf = requestAnimationFrame(loop);
+  now = now || performance.now();
+  const dt = lastFrame ? Math.min(now - lastFrame, 50) : 16; lastFrame = now;
+  if (now - seen > 400) vel *= 0.85;           // hand lost: ease to a stop
+  carry += vel * dt / 1000;
+  const step = carry | 0;
+  if (step) { window.scrollBy({ top: step, behavior: 'instant' }); carry -= step; }
   if (video.readyState < 2 || video.currentTime === lastT) return;
   lastT = video.currentTime;
   const res = landmarker.detectForVideo(video, performance.now());
@@ -62,6 +68,12 @@ function loop() {
   // palm centre (middle-finger knuckle), mirrored so it moves like a mirror
   const x = 1 - lm[9].x, y = 1 - lm[9].y;
   window.__bg.pointer(x, y);
+  // palm height drives scroll speed: top third scrolls up, bottom third down, middle holds
+  seen = performance.now();
+  const hy = lm[9].y, dead = 0.14;
+  const off = hy < 0.5 - dead ? hy - (0.5 - dead) : hy > 0.5 + dead ? hy - (0.5 + dead) : 0;
+  const want = Math.sign(off) * Math.min(1, Math.abs(off) / 0.3) ** 1.5 * 1400;   // px per second
+  vel += (want - vel) * 0.25;
   // open hand = more energy (fingertips far from the wrist)
   const d = (a, b) => Math.hypot(lm[a].x - lm[b].x, lm[a].y - lm[b].y);
   const span = d(0, 9) || 1;
@@ -79,6 +91,6 @@ function loop() {
 export async function toggle(btn) {
   if (on) stop(btn); else {
     try { await start(btn); }
-    catch (e) { stop(btn); btn.innerHTML = 'Camera unavailable'; throw e; }
+    catch (e) { stop(btn); btn.querySelector('.hand-label').textContent = 'Camera unavailable'; throw e; }
   }
 }

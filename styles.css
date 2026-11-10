@@ -827,12 +827,15 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 60; pointer-ev
 /* v129 three.js shader background */
 .bg-shader { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; display: block; }
 .has-shader .glow { display: none; }
-/* v130 opt-in hand control */
-.hand-btn { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 65; display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(27, 44, 41, .72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--cream); font: 500 .82rem/1 var(--sans); cursor: pointer; transition: border-color .2s, background-color .2s; }
-.hand-btn:hover { border-color: var(--cream); }
-.hand-btn[aria-pressed="true"] { background: var(--cream); color: var(--olive); }
-.hand-panel { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: calc(64px + env(safe-area-inset-bottom, 0px)); z-index: 65; width: 176px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: rgba(27, 44, 41, .85); }
-.hand-panel video, .hand-panel canvas { display: block; width: 176px; height: 132px; object-fit: cover; transform: scaleX(-1); opacity: .45; }
+/* v130 opt-in hand control, styled like the nav's ellipse button */
+.hand-btn { position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 65; display: inline-flex; align-items: center; gap: .65rem; padding: .7rem 1.4rem; border: 1px solid rgba(228, 223, 243, .55); border-radius: 50%; background: transparent; color: var(--cream); font: 400 .72rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; cursor: pointer; transition: background-color .25s, color .25s, border-color .25s; }
+.hand-btn:hover, .hand-btn[aria-pressed="true"] { background: var(--cream); color: var(--olive); border-color: var(--cream); }
+.hand-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .85; }
+.hand-btn[aria-pressed="true"] .hand-dot { animation: sig-live 2s infinite; }
+.hand-panel { position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: calc(72px + env(safe-area-inset-bottom, 0px)); z-index: 65; width: 188px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--tile); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.hand-panel video, .hand-panel canvas { display: block; width: 188px; height: 141px; object-fit: cover; transform: scaleX(-1); opacity: .35; }
 .hand-panel canvas { position: absolute; left: 0; top: 0; transform: none; opacity: 1; }
-.hand-panel p { margin: 0; padding: .45rem .6rem; font-size: .7rem; line-height: 1.35; color: var(--cream-2); }
+.hand-cam { position: relative; }
+.hand-zone { position: absolute; left: 0; right: 0; top: 36%; height: 28%; border-top: 1px dashed rgba(228,223,243,.35); border-bottom: 1px dashed rgba(228,223,243,.35); pointer-events: none; }
+.hand-panel p { margin: 0; padding: .6rem .7rem .7rem; font-size: .72rem; line-height: 1.45; color: var(--cream-2); }
 @media print { .hand-btn, .hand-panel { display: none; } }

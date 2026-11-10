@@ -108,16 +108,16 @@ if (renderer) {
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && matchMedia('(pointer: fine)').matches) {
     const btn = document.createElement('button');
     btn.type = 'button'; btn.className = 'hand-btn';
-    btn.innerHTML = '<span aria-hidden="true">&#9995;</span> Move it with your hand';
+    btn.innerHTML = '<span class="hand-dot" aria-hidden="true"></span><span class="hand-label">Scroll with your hand</span>';
     document.body.appendChild(btn);
     btn.addEventListener('click', async () => {
       if (btn.dataset.busy) return;
       btn.dataset.busy = '1';
       try {
-        const mod = await import('./hand.js?v=2');
+        const mod = await import('./hand.js?v=3');
         await mod.toggle(btn);
       } catch (e) {
-        btn.innerHTML = 'Camera unavailable';
+        btn.querySelector('.hand-label').textContent = 'Camera unavailable';
         console.warn(e);
       }
       delete btn.dataset.busy;
