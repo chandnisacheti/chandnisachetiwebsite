@@ -729,3 +729,6 @@ a { color: inherit; text-underline-offset: 0.25em; text-decoration-thickness: 1p
 .bi-card-photo::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(27,44,41,.95) 15%, rgba(27,44,41,.35) 75%); }
 .bi-card-photo > span { z-index: 2; }
 @media (max-width: 900px) { .bi-card:not(.bi-card-photo) { min-height: 0; } }
+/* v129 three.js shader background */
+.bg-shader { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; display: block; }
+.has-shader .glow { display: none; }
