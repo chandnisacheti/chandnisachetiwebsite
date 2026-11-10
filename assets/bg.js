@@ -114,7 +114,7 @@ if (renderer) {
       if (btn.dataset.busy) return;
       btn.dataset.busy = '1';
       try {
-        const mod = await import('./hand.js?v=8');
+        const mod = await import('./hand.js?v=9');
         await mod.toggle(btn);
       } catch (e) {
         btn.querySelector('.hand-label').textContent = 'Camera unavailable';
