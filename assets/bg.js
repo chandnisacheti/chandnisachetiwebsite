@@ -23,14 +23,15 @@ if (renderer) {
     uMouse: { value: new THREE.Vector2(0.62, 0.7) },
     uScroll: { value: 0 },
     uClick: { value: new THREE.Vector2(-9, -9) },
-    uClickT: { value: -100 }
+    uClickT: { value: -100 },
+    uEnergy: { value: 0 }
   };
   const material = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: 'void main(){ gl_Position = vec4(position.xy, 0.0, 1.0); }',
     fragmentShader: `
       precision highp float;
-      uniform float uTime, uScroll, uClickT;
+      uniform float uTime, uScroll, uClickT, uEnergy;
       uniform vec2 uRes, uMouse, uClick;
       float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
       float noise(vec2 p){
@@ -41,6 +42,14 @@ if (renderer) {
         float v = 0.0, a = 0.5; mat2 m = mat2(1.6, 1.2, -1.2, 1.6);
         for (int i = 0; i < 5; i++){ v += a*noise(p); p = m*p; a *= 0.5; }
         return v;
+      }
+      vec2 nodePos(vec2 c){
+        vec2 h = vec2(hash(c), hash(c + 17.3));
+        return c + 0.5 + 0.32 * sin(6.2831 * h + uTime * 0.12 * (0.6 + h.yx));
+      }
+      float seg(vec2 p, vec2 a, vec2 b, out float h){
+        vec2 pa = p - a, ba = b - a; h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+        return length(pa - ba * h);
       }
       void main(){
         vec2 uv = gl_FragCoord.xy / uRes;
@@ -72,6 +81,33 @@ if (renderer) {
         float ring = exp(-pow(length(p - c) - age*1.1, 2.0) * 30.0) * exp(-age * 1.6);
         col += teal * 0.25 * ring * (0.6 + 0.4*ridge);
 
+        // neuron network: drifting somas, dendrites, travelling spikes
+        vec2 np = p * 1.25 + vec2(7.0, 3.0);
+        vec2 mn = m * 1.25 + vec2(7.0, 3.0);
+        vec2 cell = floor(np);
+        float net = 0.0, soma = 0.0, spikes = 0.0;
+        for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
+          vec2 c = cell + vec2(float(i), float(j));
+          vec2 a = nodePos(c);
+          vec2 da = np - a;
+          soma += exp(-dot(da, da) * 600.0) + 0.35 * exp(-dot(da, da) * 60.0);
+          for (int k = 0; k < 3; k++) {
+            vec2 o = k == 0 ? vec2(1.0, 0.0) : (k == 1 ? vec2(0.0, 1.0) : vec2(1.0, 1.0));
+            float keep = step(0.3, hash(c * 1.7 + o * 3.1));
+            vec2 b = nodePos(c + o);
+            float h; float sd = seg(np, a, b, h);
+            net += exp(-sd * sd * 22000.0) * keep;
+            float rate = 0.18 * (0.5 + hash(c + o * 5.3)) * (1.0 + 2.0 * uEnergy);
+            float ph = fract(uTime * rate + hash(c - o));
+            float len = length(b - a);
+            spikes += exp(-pow((h - ph) * len, 2.0) * 220.0) * exp(-sd * sd * 2500.0) * keep;
+          }
+        }
+        float near = exp(-dot(np - mn, np - mn) * 0.9);
+        float act = 0.38 + 1.1 * near + 0.8 * uEnergy;
+        vec3 nc = vec3(0.62, 0.88, 0.80);
+        col += nc * (0.05 * net + 0.12 * soma + 0.32 * spikes) * act;
+
         col *= 0.88 + 0.12 * smoothstep(1.2, 0.2, length(uv - 0.5));
         col += (hash(gl_FragCoord.xy + fract(uTime)) - 0.5) * 0.012;
         gl_FragColor = vec4(col, 1.0);
@@ -89,11 +125,39 @@ if (renderer) {
   addEventListener('resize', resize);
 
   const target = uniforms.uMouse.value.clone();
-  addEventListener('pointermove', e => { target.set(e.clientX / innerWidth, 1 - e.clientY / innerHeight); }, { passive: true });
+  addEventListener('pointermove', e => { if (handOn) return; target.set(e.clientX / innerWidth, 1 - e.clientY / innerHeight); }, { passive: true });
   addEventListener('pointerdown', e => {
     uniforms.uClick.value.set(e.clientX / innerWidth, 1 - e.clientY / innerHeight);
     uniforms.uClickT.value = uniforms.uTime.value;
   }, { passive: true });
+
+  let handOn = false;
+  window.__bg = {
+    pointer(x, y) { target.set(x, y); },
+    ripple(x, y) { uniforms.uClick.value.set(x, y); uniforms.uClickT.value = uniforms.uTime.value; },
+    energy(v) { uniforms.uEnergy.value += (v - uniforms.uEnergy.value) * 0.15; },
+    setHand(on) { handOn = on; if (!on) uniforms.uEnergy.value = 0; }
+  };
+
+  // Opt-in hand control (desktop with a camera only)
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && matchMedia('(pointer: fine)').matches) {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'hand-btn';
+    btn.innerHTML = '<span aria-hidden="true">&#9995;</span> Move it with your hand';
+    document.body.appendChild(btn);
+    btn.addEventListener('click', async () => {
+      if (btn.dataset.busy) return;
+      btn.dataset.busy = '1';
+      try {
+        const mod = await import('./hand.js?v=1');
+        await mod.toggle(btn);
+      } catch (e) {
+        btn.innerHTML = 'Camera unavailable';
+        console.warn(e);
+      }
+      delete btn.dataset.busy;
+    });
+  }
 
   const clock = new THREE.Clock();
   let running = true;

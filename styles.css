@@ -824,7 +824,15 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 60; pointer-ev
 
 @media (prefers-reduced-motion: reduce) { .sig-dot { animation: none; } .st-card, .bi-card, .nm-card, .po-next { transition: none; } }
 .pillar-head .sig { flex: 1 0 100%; }
-=======
 /* v129 three.js shader background */
 .bg-shader { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; display: block; }
 .has-shader .glow { display: none; }
+/* v130 opt-in hand control */
+.hand-btn { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 65; display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(27, 44, 41, .72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--cream); font: 500 .82rem/1 var(--sans); cursor: pointer; transition: border-color .2s, background-color .2s; }
+.hand-btn:hover { border-color: var(--cream); }
+.hand-btn[aria-pressed="true"] { background: var(--cream); color: var(--olive); }
+.hand-panel { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: calc(64px + env(safe-area-inset-bottom, 0px)); z-index: 65; width: 176px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: rgba(27, 44, 41, .85); }
+.hand-panel video, .hand-panel canvas { display: block; width: 176px; height: 132px; object-fit: cover; transform: scaleX(-1); opacity: .45; }
+.hand-panel canvas { position: absolute; left: 0; top: 0; transform: none; opacity: 1; }
+.hand-panel p { margin: 0; padding: .45rem .6rem; font-size: .7rem; line-height: 1.35; color: var(--cream-2); }
+@media print { .hand-btn, .hand-panel { display: none; } }
